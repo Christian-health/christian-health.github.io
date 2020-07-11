@@ -1,9 +1,5 @@
 ---
 layout:     post
-title:      
-subtitle:   
-date:       
-author:     
 header-img: img/post-bg-go-swagger.jpg
 catalog: true
 tags:
@@ -13,7 +9,7 @@ tags:
 
 ## go-swagger文档自动化
 
-工作中使用go-swagger完成文档自动化，一直是简单的使用，没有仔细的研究，最近有时间仔细研究一下，再次记录
+工作中使用go-swagger完成文档自动化，一直是简单的使用，没有仔细的研究，最近有时间仔细研究一下，再此记录一下。
 
 
 ## iOS 12 和 ARKit 2.0
