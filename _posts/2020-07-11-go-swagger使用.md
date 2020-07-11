@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      go-swagger的使用
-subtitle:   golang
+title:      go-swagger文档自动化
+subtitle:   
 date:       2020-07-11
 author:     yangxuefeng
-header-img: img/post-bg-cook.jpg
+header-img: img/post-bg-go-swagger.jpg
 catalog: true
 tags:
     - golang
