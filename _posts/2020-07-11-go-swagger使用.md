@@ -1,10 +1,8 @@
 ---
 layout:     post
-title:      
 header-img: img/post-bg-go-swagger.jpg
 catalog: true
 tags:
-    - golang
     - go-swagger
 ---
 
