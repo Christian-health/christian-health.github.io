@@ -1,9 +1,7 @@
 ---
 layout:     post
 title:      
-
-go-swagger文档自动化
-subtitle:   
+subtitle:   go-swagger文档自动化
 date:       2020-07-11
 author:     yangxuefeng
 header-img: img/post-bg-go-swagger.jpg
