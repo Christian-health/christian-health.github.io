@@ -1,6 +1,9 @@
 ---
 layout:     post
 title:      ""
+subtitle:   ""
+data:       ""
+author:     ""
 header-img: img/post-bg-go-swagger.jpg
 catalog: true
 tags:
