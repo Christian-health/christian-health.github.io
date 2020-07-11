@@ -1,16 +1,17 @@
 ---
 layout:     post
 title:      
-subtitle:   go-swagger文档自动化
-date:       2020-07-11
-author:     yangxuefeng
+subtitle:   
+date:       
+author:     
 header-img: img/post-bg-go-swagger.jpg
 catalog: true
 tags:
     - golang
+    - go-swagger
 ---
 
-## 前言
+## go-swagger文档自动化
 
 工作中使用go-swagger完成文档自动化，一直是简单的使用，没有仔细的研究，最近有时间仔细研究一下，再次记录
 
