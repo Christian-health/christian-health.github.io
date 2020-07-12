@@ -24,6 +24,10 @@ tags:
 swagger:route标记用来定义接口的路由信息，它会将路径连接到方法，此操作获取唯一id，该id在各个位置用作方法名称。语法如下：
 swagger:route [method] [path pattern] [?tag1 tag2 tag3] [operation id]。
 
+https://blog.csdn.net/benben_2015/article/details/100538074
+
+https://www.cnblogs.com/xiaobaiskill/p/10696621.html
+
 ### 属性
 
 |    标记  |     含义    |
