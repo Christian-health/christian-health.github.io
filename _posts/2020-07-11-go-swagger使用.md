@@ -19,7 +19,16 @@ tags:
 
 >关键词：官方防沉迷最为致命
 
-### iOS 12 
+### swagger:route 
+
+|    标记  |     含义    |
+|------------|-------------|
+|Consumes|描述接口支持的特定的mime类型值，如果有多个，每个类型占据一行。支持的MIME类型有json，yaml，xml，txt，bin，urlform，multipartform|
+|Produces|描述接口支持的特定的mime类型值，如果有多个，每个类型占据一行|
+|Schemes|描述接口支持的特定协议类型，可能的值有http，https，ws，wss|
+|Responses|响应状态码字典|
+|Deprecated|如果此值为true，则将路由标记为不推荐使用|
+|Security|关键字字典：[] string {scopes}|
 
 iOS 12 相较于 iOS 11 并没有太多UI上的变动，刚更新完 bate 版本的 iOS 12，完全感觉不到这是个新系统。
 
