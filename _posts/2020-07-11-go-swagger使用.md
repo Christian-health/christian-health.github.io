@@ -126,7 +126,7 @@ func init() {
 
 ```
 如果查看swagger对应的web页面，可以看到如下的内容:
-
+![swagger-meta在web上对应的页面](https://github.com/Christian-health/christian-health.github.io/blob/master/img/post-swagger-meta.JPG)
 ### 使用swagger:route定义路由信息
 
 swagger:route标记用来定义接口的路由信息，它会将路径连接到方法，此操作获取唯一id，该id在各个位置用作方法名称。语法如下：
@@ -345,10 +345,12 @@ macOS 会跟据文件类型和标签对桌面的文件进行自动分类整理�
 对于 iOS 开发者来说，macOS 将可以使用 iOS 的 UIKit 框架进行开发是一个值得关注的点。
 
 ### 参考
+- [利用swagger打造高可用项目文档——GO篇](https://studygolang.com/articles/22648?fr=sidebar)
 
-- [WWDC 2018 Keynote](https://developer.apple.com/videos/play/wwdc2018/101/)
-- [Apple WWDC 2018: what's new? All the announcements from the keynote](https://www.techradar.com/news/apple-wwdc-2018-keynote)
-- [iOS 加入「防沉迷」，macOS 有了暗色主题，今年的 WWDC 重点都在系统上](http://www.ifanr.com/1043270)
-- [苹果 WWDC 2018：最全总结看这里，不错过任何重点](https://sspai.com/post/44816)
+- [使用go-swagger为Go工程生成自动化接口文档](https://blog.csdn.net/benben_2015/article/details/100538074)
+
+- [go-swagger官方文档](https://goswagger.io/)
+
+  
 
 
