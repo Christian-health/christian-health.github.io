@@ -23,8 +23,8 @@ tags:
 ## 使用go-swagger
 进入自己项目的swagger.exe所在的目录，swagger会自己寻找main包。
 执行命令
-swagger generate spec -o ./swagger.json    // 根据swagger规范 创建swagger.json规范文档
-swagger serve -F=swagger swagger.json     // 启动一个http 服务同时将json文档放入http://petstore.swagger.io 执行
+swagger generate spec -o ./swagger.json    // 根据swagger规范 创建swagger.json规范文档 <br/>
+swagger serve -F=swagger swagger.json     // 启动一个http 服务同时将json文档放入http://petstore.swagger.io 执行 <br/>
 
 
 ### 使用swagger:route定义路由信息
