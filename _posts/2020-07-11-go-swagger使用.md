@@ -21,10 +21,12 @@ tags:
 ![swagger的发布版本截图](https://github.com/Christian-health/christian-health.github.io/blob/master/img/post-bg-swagger-download.jpg)
 比如下载swagger_windows_amd64.exe，将swagger_windows_amd64.exe  重命名成swagger.exe，放在项目所在的main目录同级的目录中。
 ## 使用go-swagger
-进入自己项目的swagger.exe所在的目录，swagger会自己寻找main包。
+进入自己项目的swagger.exe所在的目录，swagger会自己寻找main包。<br/>
+```
 执行命令
 swagger generate spec -o ./swagger.json    // 根据swagger规范 创建swagger.json规范文档 <br/>
 swagger serve -F=swagger swagger.json     // 启动一个http 服务同时将json文档放入http://petstore.swagger.io 执行 <br/>
+```
 
 
 ### 使用swagger:route定义路由信息
