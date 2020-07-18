@@ -19,9 +19,9 @@ tags:
 
 ## 安装运行
 
-​		（1）创建一个echo的项目的目录
+​		（1）使用goland创建一个echodemo的项目的目录
 
-​		（2）执行go mod init echo-demo，将会生成go.mod文件
+​		（2）执行go mod init echodemo，将会生成go.mod文件
 
 ​		（3）创建src目录和main目录，并创建main.go
 
