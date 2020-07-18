@@ -21,13 +21,13 @@ tags:
 
 ​		（1）创建一个echo的项目的目录
 
-​		（2）执行go mod init echo-demo
+​		（2）执行go mod init echo-demo，将会生成go.mod文件
 
 ​		（3）创建src目录和main目录，并创建main.go
 
 ​		（4）拷贝echo官网的demo到main.go
 
-​		（5）执行go run main.go，在执行过程中会自动下载所依赖的echo包
+​		（5）执行go run main.go，在执行过程中会自动下载所依赖的echo包，同时将会更新go.mod和go.sum两个文件
  
 
 ![echo运行成功](https://github.com/Christian-health/christian-health.github.io/blob/master/img/echo-simple-run.jpg?raw=true)
