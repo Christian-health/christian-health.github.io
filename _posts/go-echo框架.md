@@ -27,8 +27,7 @@ tags:
 
 ​		（4）拷贝echo官网的demo到main.go
 
-​		（5）执行go run main.go，在执行过程中会自动下载所依赖的echo包，同时将会更新go.mod和go.sum两个文件
- 
+​		（5）执行go run main.go，在执行过程中会自动下载所依赖的echo包，同时将会更新go.mod和go.sum两个文件 
 
 ![echo运行成功](https://github.com/Christian-health/christian-health.github.io/blob/master/img/echo-simple-run.jpg?raw=true)
 
