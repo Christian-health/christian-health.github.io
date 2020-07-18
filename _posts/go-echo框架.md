@@ -31,9 +31,31 @@ tags:
 
 ![echo运行成功](https://github.com/Christian-health/christian-health.github.io/blob/master/img/echo-simple-run.jpg?raw=true)
 
+
+
 ## 使用echo
 
 #### 1、自定义
+
+echo框架可以自定义如下的内容，有些内容有很长，需要单独的章节来总结。
+
+- 自定义
+    - Debug
+    - 日志
+        - 日志输出 
+        - 日志级别
+        - 自定义日志
+    - 自定义 Server
+        - 使用 Echo#StartServer()
+        - 启动横幅
+        - 自定义监听器
+- 禁用 HTTP/2
+- 读取超时
+- 写入超时
+- 验证
+- 自定义绑定
+- 渲染
+- HTTP 错误处理
 
 ```go
 package main
@@ -101,6 +123,10 @@ func hello(c echo.Context) error {
    return c.String(http.StatusOK, "Hello World,customize!")
 }	
 ```
+
+## Context
+
+echo.Context 代表了当前 HTTP 请求的 context（上下文），它含有请求和相应的引用，路径，路径参数，数据，注册的业务处理方法和读取请求和输出响应的API。由于 Context 是一个接口，所以也可以很方便的使用自定义的 API 扩展。
 
 ## 参考：
 
