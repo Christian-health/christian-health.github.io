@@ -1,4 +1,15 @@
-
+---
+layout:     post
+title:      "echo框架使用学习总结"
+subtitle:   "echo"
+data:       ""
+author:     ""
+header-img: img/echo-back-title.jpg
+catalog: true
+tags:
+    - echo
+    - go
+---
 
 
 
@@ -8,7 +19,15 @@
 
 ## 安装运行
 
-​                 
+​		（1）创建一个echo的项目的目录
+
+​		（2）执行go mod init echo-demo
+
+​		（3）创建src目录和main目录，并创建main.go
+
+​		（4）拷贝echo官网的demo到main.go
+
+​		（5）执行go run main.go
 
 ## 参考：
 
