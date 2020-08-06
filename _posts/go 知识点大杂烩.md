@@ -1,0 +1,183 @@
+## os/signal 
+
+在实际项目中我们可能有下面的需求：
+1、修改了配置文件后，希望在不重启进程的情况下重新加载配置文件；
+2、当用 Ctrl + C 强制关闭应用后，做一些必要的处理；
+
+这时候就需要通过信号传递来进行处理了。golang中对信号的处理主要使用os/signal包中的两个方法：一个是notify方法用来监听收到的信号；一个是 stop方法用来取消监听。
+
+#### 监听信号
+
+notify方法原型
+```func Notify(c chan<- os.Signal, sig ...os.Signal)```
+第一个参数表示接收信号的管道
+第二个及后面的参数表示设置要监听的信号，如果不设置表示监听所有的信号。
+
+ 下面是一个非常简单地例子：
+
+```go
+package main
+import (
+    "fmt"
+    "os"
+    "os/signal"
+)
+
+func main() {
+    c := make(chan os.Signal)
+    signal.Notify(c) //监听所有的信号
+    //signal.Notify(c, syscall.SIGHUP, syscall.SIGUSR2)  //监听指定信号
+    s := <-c //阻塞直至有信号传入
+    fmt.Println("get signal:", s)
+}
+
+/*
+GOROOT=C:\Go #gosetup
+GOPATH=C:\Users\Administrator.ZD-20200510TDFG\go;D:\workspace #gosetup
+C:\Go\bin\go.exe build -o C:\Users\Administrator.ZD-20200510TDFG\AppData\Local\Temp\___go_build_awesomeProject_main.exe awesomeProject/main #gosetup
+C:\Users\Administrator.ZD-20200510TDFG\AppData\Local\Temp\___go_build_awesomeProject_main.exe #gosetup
+当按下ctrl+c键时，运行结果：
+get signal: interrupt
+
+Process finished with exit code 0
+*/
+```
+
+上面的代码过于简单，一般我们会是用下面代码的方式来处理的。
+
+```go
+package main
+import (
+    "fmt"
+    "os"
+    "os/signal"
+    "time"
+)
+
+func main() {
+    go signalListen()
+    time.Sleep(time.Hour)
+}
+
+func signalListen() {
+    c := make(chan os.Signal)
+    signal.Notify(c)
+    for {
+        s := <-c
+        //收到信号后的处理，这里只是输出信号内容，可以做一些更有意思的事
+        fmt.Println("get signal:", s)
+        os.Exit(1)
+    }
+}
+/*
+GOROOT=C:\Go #gosetup
+GOPATH=C:\Users\Administrator.ZD-20200510TDFG\go;D:\workspace #gosetup
+C:\Go\bin\go.exe build -o C:\Users\Administrator.ZD-20200510TDFG\AppData\Local\Temp\___go_build_awesomeProject_main.exe awesomeProject/main #gosetup
+C:\Users\Administrator.ZD-20200510TDFG\AppData\Local\Temp\___go_build_awesomeProject_main.exe #gosetup
+执行效果
+get signal: interrupt
+
+Process finished with exit code 1
+*/
+
+```
+
+#### 停止监听
+
+```go
+package main
+import (
+    "fmt"
+    "os"
+    "os/signal"
+)
+
+func main() {
+    c := make(chan os.Signal)
+    signal.Notify(c)
+    //当调用了该方法后，下面的for循环内<-c接收到一个信号就退出了。
+    signal.Stop(c)
+    for {
+        s := <-c
+        fmt.Println("get signal:", s)
+    }
+}
+/*
+
+*/
+
+```
+
+注意下面两个程序的区别：
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func main() {
+	go signalListen()
+	time.Sleep(time.Hour)
+}
+
+func signalListen() {
+	c := make(chan os.Signal)
+	//下面的两个Notify的意思是Notify可以累加。也就是第一个Notify用来添加上面的两个信号
+	//而第二Notify用来添加一个信号，所以总共是是三个信号，也就是说Notify可以累加调用
+	signal.Notify(c, syscall.SIGQUIT, syscall.SIGTERM)
+	signal.Notify(c,syscall.SIGHUP)
+	for {
+		s := <-c
+		//收到信号后的处理，这里只是输出信号内容，可以做一些更有意思的事
+		fmt.Println("==============before=================")
+		fmt.Println("get signal:", s)
+		fmt.Println("==============after=================")
+
+		os.Exit(1)
+	}
+}
+```
+
+golang中处理信号非常简单，但是关于信号本身需要了解的还有很多，建议可以参考《Unix高级编程》中的信号篇章。
+
+我们得使用带缓冲 channel，否则，发送信号时我们还没有准备好接收，就有丢失信号的风险。比如如下测试代码：
+
+```go
+package main
+
+import (
+	"log"
+	"os"
+	"os/signal"
+	"time"
+)
+
+func main() {
+	//下面这行代码，因为有了缓存，所以在前5秒内，只要有一次发送信号了，那么就会被缓存下来，过了5秒之后就立刻退出
+	//c := make(chan os.Signal,1)
+
+	//下面这行代码，没有缓存，所以在前5秒怎么发送信号都没有用，只有超过了5秒发送信号才能好使
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt)
+
+	time.Sleep(time.Second * 5) // 假装 5 秒没准备好接收
+	s := <-c
+	log.Println(s)
+}
+```
+
+在使用不带缓存的 channel 时，5 秒的 sleep 期间无论按多少个 control + c，sleep 结束都不会打印，也不会退出程序；在使用带缓存的 channel 时，只要接收到一个 `SIGINT` ，在 sleep 结束后也就是准备好接收，便会打印并退出程序。这就是 `signal.Notify` 使用带缓存 channel 的作用。
+
+## 参考
+
+- [go语言帮助文档](https://studygolang.com/pkgdoc)
+- [Golang的 signal](https://studygolang.com/articles/2333)
+- [关于 signal.Notify 使用带缓存的 channel](https://studygolang.com/articles/23104?fr=sidebar)
+
+
