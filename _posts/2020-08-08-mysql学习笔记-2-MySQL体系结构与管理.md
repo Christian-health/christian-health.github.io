@@ -329,10 +329,24 @@ worpress.t1 worpress库下的t1表授权
 ##### 4.4.4 回收权限
 
 ```mysql
-show  grants for wordpress@'10.0.0.%';
-mysql> revoke delete on wordpress.*  from 'wordpress'@'10.0.0.%';
+mysql> show  grants for wordpress@'10.0.0.%';   显示给一个用户授权了哪些权限
+mysql> revoke delete on wordpress.*  from 'wordpress'@'10.0.0.%';  收回这个用户的delete权限，从wordpress这个库下的所有表
 mysql> show  grants for wordpress@'10.0.0.%';
 ```
+
+##### 4.4.5 关于生产中开用户
+
+（1）如何沟通开用户
+1. 是否有邮件批复
+2. 对哪些库和表做操作
+3. 做什么操作
+4. 从什么地址来登录
+
+（2）开发人员找你要root用户密码？
+5. 走流程拒绝他
+6. 如果是金融类的公司
+  （1）原则上是不允许任何非DBA人员持有或申请root
+  （2）如果有人私下索要root密码，即使举报。
 
 ## 参考
 
