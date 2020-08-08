@@ -16,6 +16,8 @@ mysql启动的时候就可以设置使用的内存大小是多少。mysql启动�
 
 ## 3、MySQL中mysqld服务器进程结构
 
+![mysqld程序结构.JPG](https://github.com/Christian-health/christian-health.github.io/blob/master/img/mysqld%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84.JPG?raw=true)
+
 mysqld是最重要的，如果没有mysqld，那么就不会有后面的创建master thread、干活的Thread、预分配的内存，这些都是mysqld做的。
 
 ### 3.1 SQL语句引入
