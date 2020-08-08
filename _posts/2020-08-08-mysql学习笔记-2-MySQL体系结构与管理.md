@@ -283,7 +283,7 @@ mysql> alter user hot@'10.0.0.%' identified by '123456';
 ##### 4.3.4 删除用户
 
 ```mysql
-mysql> drop user hot@'10.0.0.%' ;
+mysql> drop user hot@'10.0.0.%' ;   生产中删除用户的操作基本都是屏蔽掉的，不要轻易删除用户
 ```
 
 #### 4.4 权限管理
