@@ -290,40 +290,53 @@ mysql> drop user hot@'10.0.0.%' ;   生产中删除用户的操作基本都是�
 
 ##### 4.4.1 权限列表
 
-ALL 
+**ALL （ALL其实就是一种角色，把下面的权限都放在一起了）**
 SELECT,INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE
 
+**with grant option**  可以给别人授权
 
-with grant option
+见参考文献3
 
 ##### 4.4.2 授权命令
 
-grant all on *.* to oldguo@'10.0.0.%' identified by '123' with grant option;
+```mysql
+grant all on *.* to hot@'10.0.0.%' identified by 'Aa123456' with grant option;
 
 grant 权限  on 作用目标  to 用户  identified by 密码 with grant option;
 
-grant SELECT,INSERT, UPDATE, DELETE, CREATE on wordpress.* to 
-
-作用目标:
-*.*
-wordpress.* 
-worpress.t1 
+(1)权限就是4.4.1 ALL 下面的所有的权限，可以使用多个，然后使用逗号进行分割。
+   grant SELECT,INSERT, UPDATE, DELETE, CREATE on wordpress.* to 
+(2)作用目标:
+*.* 等价于chown 777 -R ，整个根底下的所有文件全部授权777
+wordpress.*  相当于某个目录下的所有都授权，这里就是wordpress目录下的所有文件都授权。某一个库下的所有表都授权
+worpress.t1 worpress库下的t1表授权
+```
 
 ##### 4.4.3 授权需求
 
 1. 创建一个管理员用户root，可以通过10网段，管理数据库.
-  grant all on *.* to root@'10.0.0.%' identified by '123' with grant option;
+
+  ```mysql
+  grant all on *.* to root@'10.0.0.%' identified by 'Aa123456' with grant option;
+  ```
 
 2. 创建一个应用用户wordpress，可以通过10网段，wordpress库下的所有表进行SELECT,INSERT, UPDATE, DELETE.
-  grant SELECT,INSERT, UPDATE, DELETE on wordpress.* to wordpress@'10.0.0.%' identified by '123';
 
-4.4.4 回收权限
+  ```
+  grant SELECT,INSERT, UPDATE, DELETE on wordpress.* to wordpress@'10.0.0.%' identified by 'Aa123456';
+  ```
+
+##### 4.4.4 回收权限
+
+```mysql
 show  grants for wordpress@'10.0.0.%';
 mysql> revoke delete on wordpress.*  from 'wordpress'@'10.0.0.%';
 mysql> show  grants for wordpress@'10.0.0.%';
+```
 
 ## 参考
 
 - [体系结构与管理](https://www.jianshu.com/p/e872bc12f583)
 - [sql_mode简介](https://blog.csdn.net/ssz1219175635/article/details/88429479)
+- [mysql数据库中with grant option使用方法](https://jingyan.baidu.com/article/29697b91de0b0aea20de3cdb.html)
 - 
