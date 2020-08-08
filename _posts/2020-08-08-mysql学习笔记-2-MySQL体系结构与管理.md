@@ -11,7 +11,7 @@ mysql启动的时候就可以设置使用的内存大小是多少。mysql启动�
 
 ## 2、MySQL实例的构成
 
-公司： 老板  +  经理  + 员工 + 办公区
+公司： 老板  +  经理  + 员工 + 办公区  
 实例： mysqld +  master thread   + 干活的Thread  + 预分配的内存
 
 ## 3、MySQL中mysqld服务器进程结构
@@ -22,11 +22,11 @@ mysqld是最重要的，如果没有mysqld，那么就不会有后面的创建ma
 
 ### 3.1 、SQL语句引入
 
-结构化的查询语言
-DQL   数据查询语言
-DDL   数据定义语言
-DML   数据操作语言
-DCL   数据控制语言
+结构化的查询语言  
+DQL   数据查询语言  
+DDL   数据定义语言  
+DML   数据操作语言  
+DCL   数据控制语言  
 
 ```
 例如：  mysql> select user,host from mysql.user;
@@ -34,18 +34,18 @@ DCL   数据控制语言
 
 ### 3.2、 连接层功能
 
-对应前面的图mysqld程序结构上的链接层。
+对应前面的图mysqld程序结构上的链接层。  
 
-（1） 提供连接协议
-		Socket  
-		TCPIP
-（2） 验证用户名（root@localhost）密码合法性，进行匹配专门的授权表。
+（1） 提供连接协议  
+		Socket     
+		TCPIP  
+（2） 验证用户名（root@localhost）密码合法性，进行匹配专门的授权表。  
 
-（3） 派生一个专用连接线程（接收SQL，返回结果），多一个会话就会多一个出来线程，多一个查询结果。
+（3） 派生一个专用连接线程（接收SQL，返回结果），多一个会话就会多一个出来线程，多一个查询结果。  
 
-默认最多支持151个会话，也有参数控制这个默认值。会话8个小时没有动作就会退出去，这个也有参数设定。
+默认最多支持151个会话，也有参数控制这个默认值。会话8个小时没有动作就会退出去，这个也有参数设定。  
 
-​	  mysql> show processlist;
+​	  mysql> show processlist;  
 
 ```sql
 mysql> show processlist;
@@ -58,16 +58,16 @@ mysql> show processlist;
 
 ```
 
-（4）讲语句交给下一层
+（4）讲语句交给下一层  
 
-思考： 
-忘记密码的参数在哪做的手脚？
---skip-grant-tables  
---skip-networking	  
+思考：   
+忘记密码的参数在哪做的手脚？  
+--skip-grant-tables    
+--skip-networking	    
 
-### 3.3 、SQL层（优化方面至关重要的）
+### 3.3 、SQL层（优化方面至关重要的）  
 
-我们现在使用的sql标准是sql92。
+我们现在使用的sql标准是sql92。  
 
 （1）验证SQL语法和SQL_MODE（是一组mysql支持的基本语法及校验规则 ）
 
