@@ -1,12 +1,10 @@
 ## 1、登录mysql有两种方法：
-
 ```
 TCP/IP方式（远程、本地）：
 mysql -uroot -poldboy123 -h 10.0.0.51 -P3306
 Socket方式(仅本地)：
 mysql -uroot -poldboy123 -S /tmp/mysql.sock
 ```
-
 mysql启动的时候就可以设置使用的内存大小是多少。mysql启动的时候，告诉操作系统，我mysql很重要，所以我要使用的内存是多少。你操作系统分配给我，如果其他的进程需要使用内存，那么不能枪我mysql的。
 
 ## 2、MySQL实例的构成
@@ -70,9 +68,7 @@ mysql> show processlist;
 我们现在使用的sql标准是sql92。  
 
 （1）验证SQL语法和SQL_MODE（是一组mysql支持的基本语法及校验规则 ）
-
 mysql 5.7将mysql的sql语句的语法制定成为严丝合缝的国际标准，5.7以前的版本都不严谨，可能会存放错误的数据进去。
-
 ```
 mysql> select @@sql_mode;
 +-------------------------------------------------------------------------------------------------------------------------------------------+
@@ -82,42 +78,37 @@ mysql> select @@sql_mode;
 +-------------------------------------------------------------------------------------------------------------------------------------------+
 1 row in set (0.07 sec)
 ```
-
-（2）验证语义 =》到底是DDL DQL ，DDL，DML ，DCL  ？
-（3）验证权限
-        **预处理包括，解析，优化，评估。从这里往后，一直到sql执行都属于预处理。**
-（4）解析器进行语句解析，生成执行计划（解析树）
-（5）优化器（各种算法，基于执行代价的算法），根据算法，找到代价最低的执行计划。（预执行了一下）
-	代价：执行时候使用的CPU  IO  MEM是多少
-	**8.0版本的优化器的算法是最好的。**
-（6）执行器按照优化器选择执行计划，执行SQL语句，得出获取数据的方法。
-（7）提供query cache(默认不开)，一般不开，会用redis
-（8）记录操作日志（binlog），默认没开
-审计日志（记录执行过的语句的），通用日志，binlog二进制日志
-
+（2）验证语义 =》到底是DDL DQL ，DDL，DML ，DCL  ？  
+（3）验证权限  
+        **预处理包括，解析，优化，评估。从这里往后，一直到sql执行都属于预处理。**  
+（4）解析器进行语句解析，生成执行计划（解析树）  
+（5）优化器（各种算法，基于执行代价的算法），根据算法，找到代价最低的执行计划。（预执行了一下）  
+	代价：执行时候使用的CPU  IO  MEM是多少  
+	**8.0版本的优化器的算法是最好的。**  
+（6）执行器按照优化器选择执行计划，执行SQL语句，得出获取数据的方法。  
+（7）提供query cache(默认不开)，一般不开，会用redis  
+（8）记录操作日志（binlog），默认没开  
+审计日志（记录执行过的语句的），通用日志，binlog二进制日志  
 ![mysqld程序结构-解释.jpg](https://github.com/Christian-health/christian-health.github.io/blob/master/img/mysqld%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84-%E8%A7%A3%E9%87%8A.jpg?raw=true)
 
 ### 3.4 存储引擎层（mysql内置的File system）
-
-真正和磁盘打交道的一个层次
-根据SQL层提供的取数据的方法，拿到数据，返回给SQL层，结构化成表，再又连接层线程返回给用户。
+真正和磁盘打交道的一个层次  
+根据SQL层提供的取数据的方法，拿到数据，返回给SQL层，结构化成表，再又连接层线程返回给用户。  
 
 ### 3.5 MySQL逻辑存储结构
 
-库 	                                    --相当于-------------------------》Linux目录
-create database wordpress charset utf8mb4;    ----》     mkdir /wordpress
-show databases;							    ----》    ls /
-use wordpress;							    ----》    cd /wordpress
-表                  								  ----》Linux的文件
-列（字段）               								无
-列属性			      								无
-数据行（记录）		         				  ----》Linux数据行
-表属性（元数据）							  ----》Linux 文件属性
+库 	                                    --相当于-------------------------》Linux目录  
+create database wordpress charset utf8mb4;    ----》     mkdir /wordpress  
+show databases;							    ----》    ls /  
+use wordpress;							    ----》    cd /wordpress  
+表                  								  ----》Linux的文件  
+列（字段）               								无  
+列属性			      								无  
+数据行（记录）		         				  ----》Linux数据行  
+表属性（元数据）							  ----》Linux 文件属性  
 
 ### 3.6 MySQL物理存储结构
-
-库： 使用FS上的目录来表示 
-
+库： 使用FS上的目录来表示   
 ```
 [root@localhost data]# pwd
 /data/mysql/data    进入磁盘上用来存放mysql数据的磁盘目录
@@ -216,22 +207,19 @@ drwxr-x---. 2 mysql mysql     8192 8月   8 10:05 sys
 ```
 
 表： 
-**MyISAM(文件系统)**
- user.frm  ： 存储的表结构（列，列属性）
- user.MYD  :  存储的数据记录
- user.MYI  ： 存储索引
+**MyISAM(文件系统)**  
+ user.frm  ： 存储的表结构（列，列属性）  
+ user.MYD  :  存储的数据记录  
+ user.MYI  ： 存储索引  
 
-**InnoDB(XFS文件系统)**
- time_zone.frm ： 存储的表结构（列，列属性）
- time_zone.ibd ： 存储的数据记录和索引
+**InnoDB(XFS文件系统)**  
+ time_zone.frm ： 存储的表结构（列，列属性）  
+ time_zone.ibd ： 存储的数据记录和索引  
+ ibdata1       :   数据字典信息（相当于linxu的inode节点，用来存储文件的元数据信息）  
 
- ibdata1       :   数据字典信息（相当于linxu的inode节点，用来存储文件的元数据信息）
-
-MyISAM和InnoDB可以理解为linux上的两个不同的文件系统。
-
-从mysql5.6开始就开始淘汰MyISAM。
-
-### 3.7 innodb 段 区 页
+MyISAM和InnoDB可以理解为linux上的两个不同的文件系统。  
+从mysql5.6开始就开始淘汰MyISAM。  
+### 3.7 innodb 段 区 页  
 
 一般情况下（非分区表）
 一个表就是一个段
