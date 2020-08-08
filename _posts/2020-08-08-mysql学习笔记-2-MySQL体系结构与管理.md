@@ -229,7 +229,98 @@ MyISAM和InnoDB可以理解为linux上的两个不同的文件系统。
 
 所以mysql就在存储引擎层，把这个ibd文件也做了一个格式化，格式化成为一个格子一个格子的。一个格子是16kb，mysql中一个page就是16kb。然后mysql觉得将来表数据会很多，一页一页分太麻烦了，所以**一次性分**64个页，也就是1MB。但是这只是针对我们的数据行。如果是索引，那么因为索引很小，所以索引是按照页分配的，一次一个页。所以如果是数据行存储，那么每次分64页，也就是1MB。如果是索引存储，那么每次分1个页，也就是16kb。数据页大小可以调。连续的64个页，我们称之为一个区。
 
+## 4、用户和权限管理
 
+#### 4.1 作用 
+
+​	登录MySQL 
+	管理MySQL 
+
+#### 4.2 用户的定义
+
+​	用户名@'白名单'
+
+```
+wordpress@'%'     User@% 允许从所有的ip访问. 
+wordpress@'localhost'
+wordpress@'127.0.0.1'
+wordpress@'10.0.0.%'
+wordpress@'10.0.0.5%'   这个是50-59
+wordpress@'10.0.0.0/255.255.254.0'
+wordpress@'10.0.%'
+```
+
+#### 4.3 用户的操作 
+
+##### 4.3.1 建用户
+
+```mysql
+mysql> create user hot@'10.0.1.%' identified by 'Aa123456';
+Query OK, 0 rows affected (0.00 sec)
+```
+
+说明：
+**8.0以前**，可以自动创建用户并授权，通过如下命令。
+
+```mysql
+mysql> grant all on . to hot@'10.0.0.%' identified by 'Aa123456';   一边授权一边创建用户
+```
+
+**8.0以后**必须先建立用户，然后才能授权，因为没有用户怎么授权。所以必须严格。
+
+##### 4.3.2 查询用户
+
+```mysql
+mysql> select user,host from mysql.user;
+```
+
+##### 4.3.3 修改用户密码
+
+```mysql
+mysql> alter user hot@'10.0.0.%' identified by '123456';
+```
+
+##### 4.3.4 删除用户
+
+```mysql
+mysql> drop user hot@'10.0.0.%' ;
+```
+
+#### 4.4 权限管理
+
+##### 4.4.1 权限列表
+
+ALL 
+SELECT,INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE
+
+
+with grant option
+
+##### 4.4.2 授权命令
+
+grant all on *.* to oldguo@'10.0.0.%' identified by '123' with grant option;
+
+grant 权限  on 作用目标  to 用户  identified by 密码 with grant option;
+
+grant SELECT,INSERT, UPDATE, DELETE, CREATE on wordpress.* to 
+
+作用目标:
+*.*
+wordpress.* 
+worpress.t1 
+
+##### 4.4.3 授权需求
+
+1. 创建一个管理员用户root，可以通过10网段，管理数据库.
+  grant all on *.* to root@'10.0.0.%' identified by '123' with grant option;
+
+2. 创建一个应用用户wordpress，可以通过10网段，wordpress库下的所有表进行SELECT,INSERT, UPDATE, DELETE.
+  grant SELECT,INSERT, UPDATE, DELETE on wordpress.* to wordpress@'10.0.0.%' identified by '123';
+
+4.4.4 回收权限
+show  grants for wordpress@'10.0.0.%';
+mysql> revoke delete on wordpress.*  from 'wordpress'@'10.0.0.%';
+mysql> show  grants for wordpress@'10.0.0.%';
 
 ## 参考
 
