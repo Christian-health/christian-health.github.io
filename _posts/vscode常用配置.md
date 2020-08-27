@@ -7,7 +7,10 @@
 ## golang 列字符提示线
 在vscode中设置```"editor.rulers": [80,120]```就可以了 想画几条线都可以
 
+## 展开关闭代码
+折叠：`Ctrl/Command + k + 0`
 
+展开：`Ctrl/Command + k + j`
 
 
 
