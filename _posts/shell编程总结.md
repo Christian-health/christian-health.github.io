@@ -76,6 +76,7 @@ init的pid是1，init启动之后，首先调用/usr/login
 4、脚本中写注释，创建者的名字，创建时间
 
 ```shell
+#!/bin/sh -x是什么意思 -x 是调试用的，加了这个，就会把脚本中的每条命令的执行情况打印出来
 #Author yangxuefeng
 #create time 2020-09-26
 #脚本的用途
@@ -110,6 +111,8 @@ systemctl restart nginx
 # echo $USER
 #系统变量都是大写的
 ```
+
+![**shell-运行shell脚本的方式**](https://github.com/Christian-health/christian-health.github.io/blob/master/img/shell-%E8%BF%90%E8%A1%8Cshell%E8%84%9A%E6%9C%AC%E7%9A%84%E6%96%B9%E5%BC%8F.jpg?raw=true)
 
 ## 二、Shell变量核心基础知识
 
@@ -158,6 +161,8 @@ linux下判断是否相等，一个是使用`-eq`，另外一个是使用`==`
 
 **$0   #脚本的名称，如果是全路径执行，那么获取的将是全路径的名称**
 
+![**shell-xargs**](https://github.com/Christian-health/christian-health.github.io/blob/master/img/shell-xargs.jpg?raw=true)
+
 ```shell
 >> sh test.sh
 那么会显示test.sh
@@ -181,11 +186,56 @@ example：shell>temp=/home/temp/1.test
 
 **$n 对应的第n个参数**
 
-**$# 传递参数的总个数**
+**$# 传递参数的总个数**（注意传递参数个数超过9那么就要使用花括号包裹
 
+![**shell-多个参数显示**](https://github.com/Christian-health/christian-health.github.io/blob/master/img/shell-%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%BE%E7%A4%BA.jpg?raw=true)
 
+![**shell-多个参数显示正确**](https://github.com/Christian-health/christian-health.github.io/blob/master/img/shell-%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%BE%E7%A4%BA%E6%AD%A3%E7%A1%AE.jpg?raw=true)
 
+**$?  最后运行的命令的结束代码（返回值）即执行上一个指令的返回值 (显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误)** 
 
+**$* 获取传递的所有参数，如果不加上双引号和$@相同，如果加上双引号获取的是一个整体**
+
+**$@获取传参的所有参数，如果不加双引号和$*相同，如果加上双引号，则获取的为单个参数**
+
+**$$获取脚本的pid，一个系统运行了很多的脚本，你杀死它的时候你不知道该杀死谁，那么这个时候使用这个**
+
+```
+比如在写shell脚本的时候，在代码中写入 $$ > count.pid 那么以后就可以去count.pid文件中获取shell脚本的进程id
+```
+
+**$!获取上一个在后台运行的脚本的pid，**
+
+**$_ 获取上一个脚本最后一个参数**
+
+5、shell变量传递参数
+
+```shell
+read  -t  "超时时间"  -p  "提示信息"   变量  变量
+read -t 5 -p "please input  num: " a b
+echo $a
+```
+**双引号是弱引用，里面的变量会被替换掉，而单引号是强引用，里面原来是啥就会显示啥，里面的变量不会被替换。**
+
+6、变量的子串删除和替换
+
+```
+>> yangxuefeng="yangxuefeng123"
+>> echo ${#yangxuefeng}  会显示出变量yangxuefeng的总长度
+14
+>> echo ${yangxuefeng:2}
+ngxuefeng
+>> echo ${yangxuefeng:2:2}  类似于python中的切片
+ng
+>> echo $yangxuefeng | wc -L 获取字符串长度
+>> echo $yangxuefeng | awk '{print length}' 
+>> expr length "$yangxuefeng" 也可以取长度
+>>  youngboy="I am young boy"
+>>  echo $youngboy | xargs -n1 | awk '{if (length<3) print}' #打印出长度小于3的
+>>  echo $youngboy | awk '{for(i=1;i<NF;i++)if(length($i)<3) print $i}'
+```
+
+02-变量子串内容  30:00看到这里
 
 
 
@@ -196,6 +246,7 @@ example：shell>temp=/home/temp/1.test
 ## 参考
 
 - [参考文献1、xargs 命令教程](http://www.ruanyifeng.com/blog/2019/08/xargs-tutorial.html)
+- []()
 - 
 - 
 
