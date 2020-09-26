@@ -129,6 +129,75 @@ linux下判断是否相等，一个是使用`-eq`，另外一个是使用`==`
 
 使用`env`可以用来查看**用户的环境变量**，也可以称为本地环境变量，局部环境变量。
 
+2、自定义环境变量
+
+包含字母，下划线，数字。建议以字母或者下划线开头，**千万注意等号两边不能有空格**
+
+3、三种变量定义方式
+
+1. 字符串如何定义  
+    ```shell
+    yangxuefeng="test the function"
+    ```
+
+如果不知道该加单引号还是双引号，那么就加上双引号
+    单引号里面写得是什么就会输出什么
+    
+2. 数字如何定义
+     ```shell
+     yangxuefeng=18
+     ```
+
+3. 命令如何定义
+  ```shell
+  yangxuefeng=`ls` 
+  yangxuefeng=$(ls)
+  ```
+
+4、Shell脚本的重要位置参数
+
+**$0   #脚本的名称，如果是全路径执行，那么获取的将是全路径的名称**
+
+```shell
+>> sh test.sh
+那么会显示test.sh
+>>/server/scripts/test.sh
+那么会显示/server/srcipts/test.sh
+```
+
+ ```shell
+## basename 是去除目录后剩下的名字 
+example：shell>temp=/home/temp/1.test 
+     shell>base=`basename $temp` 
+     shell>echo $base 
+结果为：1.test 
+
+## dirname 是取目录 
+example：shell>temp=/home/temp/1.test 
+     shell>dir=`dirname $temp` 
+     shell>echo $dir 
+结果为：/home/temp 
+ ```
+
+**$n 对应的第n个参数**
+
+**$# 传递参数的总个数**
+
+
+
+
+
+
+
+
+
+
+
+## 参考
+
+- [参考文献1、xargs 命令教程](http://www.ruanyifeng.com/blog/2019/08/xargs-tutorial.html)
+- 
+- 
 
 
 
