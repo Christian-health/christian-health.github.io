@@ -238,6 +238,39 @@ ng
 02-变量子串内容  30:00看到这里
 
 
+#shell大杂烩知识点   
+(1) `>/dev/null 2>&1`      
+见参考文献3,写的非常的好     
+(2)`>/dev/null`   
+(3)`set -e 和 set +e的区别` 
+```
+set -e ： 执行的时候如果出现了返回值为非零，整个脚本 就会立即退出 
+set +e： 执行的时候如果出现了返回值为非零将会继续执行下面的脚本 
+```
+见参考文献4,写的非常的好    
+(4)`在shell里面${a%%.*}、${a##*.}`   
+```
+${varible##*string} 从左向右截取最后一个string后的字符串
+${varible#*string}从左向右截取第一个string后的字符串
+${varible%%string*}从右向左截取最后一个string后的字符串
+${varible%string*}从右向左截取第一个string后的字符串
+例子：
+$ MYVAR=foodforthought.jpg
+$ echo ${MYVAR##*fo}
+rthought.jpg
+$ echo ${MYVAR#*fo}
+odforthought.jpg
+```
+(5)`Linux umask命令`
+Linux umask命令指定在建立文件时预设的权限掩码。
+umask可用来设定[权限掩码]。[权限掩码]是由3个八进制的数字所组成，将现有的存取权限减掉权限掩码后，即可产生建立文件时预设的权限。
+```
+umask 022
+$ mkdir test1                       #创建目录  
+$ ls –d –l test1/                   #显示目录的详细信息  
+drwxr-xr-x 2 rootlocal rootlocal 4096 2011-9-19 21:46 test1/ 
+注意：在上面的输出信息中，"drwxr-xr-x"="777-022=755"。
+```
 
 
 
@@ -247,10 +280,10 @@ ng
 
 - [参考文献1、xargs 命令教程](http://www.ruanyifeng.com/blog/2019/08/xargs-tutorial.html)
 - [参考文献2、tee命令](https://www.myfreax.com/linux-tee-command/)
-- 
-- 
-
-
+- [参考文献3、>/dev/null 2>&1](https://www.cnblogs.com/ultranms/p/9353157.html)
+- [参考文献4、shell 中的 set -e 和 set +e的区别](https://www.cnblogs.com/vanoraxnc/p/10728424.html)
+- [参考文献5、在shell里面${a%%.*}、${a##*.}](https://blog.csdn.net/long375577908/article/details/78498235)
+- [参考文献6、Linux umask命令](https://www.runoob.com/linux/linux-comm-umask.html)
 
 
 
