@@ -246,7 +246,7 @@ ng
 ## 参考
 
 - [参考文献1、xargs 命令教程](http://www.ruanyifeng.com/blog/2019/08/xargs-tutorial.html)
-- []()
+- [参考文献2、tee命令](https://www.myfreax.com/linux-tee-command/)
 - 
 - 
 
