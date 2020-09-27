@@ -274,8 +274,24 @@ $ ls –d –l test1/                   #显示目录的详细信息
 drwxr-xr-x 2 rootlocal rootlocal 4096 2011-9-19 21:46 test1/ 
 注意：在上面的输出信息中，"drwxr-xr-x"="777-022=755"。
 ```
+(6)`:>`
 
+(7)`sudo -E -u`
+简单来说，就是加上-E选项后，用户可以在sudo执行时保留当前用户已存在的环境变量，不会被sudo重置，另外，如果用户对于指定的环境变量没有权限，则会报错。
+参考文献8
 
+(8)`Linux nohup 命令`
+nohup 英文全称 no hang up（不挂起），用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。
+```
+nohup Command [ Arg … ] [　& ]
+参数说明：
+Command：要执行的命令。
+
+Arg：一些参数，可以指定输出文件。
+
+&：让命令在后台执行，终端退出后命令仍旧执行。
+```
+见参考文献7,写的非常的好    
 
 
 
@@ -287,8 +303,8 @@ drwxr-xr-x 2 rootlocal rootlocal 4096 2011-9-19 21:46 test1/
 - [参考文献4、shell 中的 set -e 和 set +e的区别](https://www.cnblogs.com/vanoraxnc/p/10728424.html)
 - [参考文献5、在shell里面${a%%.*}、${a##*.}](https://blog.csdn.net/long375577908/article/details/78498235)
 - [参考文献6、Linux umask命令](https://www.runoob.com/linux/linux-comm-umask.html)
-
-
+- [参考文献7、Linux nohup 命令](https://www.runoob.com/linux/linux-comm-nohup.html)
+- [参考文献8、sudo -E的意思](https://www.cnblogs.com/pinganzi/p/5254995.html)
 
 
 
