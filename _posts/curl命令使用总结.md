@@ -1,3 +1,13 @@
+## -u参数
+-u参数用来设置服务器认证的用户名和密码。
+`$ curl -u 'bob:12345' https://google.com/login`
+上面命令设置用户名为bob，密码为12345，然后将其转为 HTTP 标头Authorization: Basic Ym9iOjEyMzQ1。
+
+curl 能够识别 URL 里面的用户名和密码。例如：
+`$ curl https://bob:12345@google.com/login`
+上面命令能够识别 URL 里面的用户名和密码，将其转为上个例子里面的 HTTP 标头。
+`$ curl -u 'bob' https://google.com/login`
+上面命令只设置了用户名，执行后，curl 会提示用户输入密码。
 
 ## -w参数
 
@@ -111,4 +121,5 @@ time_total: 0.262
 
 
 ## 参考文献
-- [curl 的用法指南](http://www.ruanyifeng.com/blog/2019/09/curl-reference.html)
+- [参考文献1、curl 的用法指南](http://www.ruanyifeng.com/blog/2019/09/curl-reference.html)
+- [参考文献2、CURL -w 参数详解](https://blog.csdn.net/weifangan/article/details/80741981)
