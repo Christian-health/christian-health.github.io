@@ -293,6 +293,13 @@ Arg：一些参数，可以指定输出文件。
 ```
 见参考文献7,写的非常的好    
 
+(9)`grep命令返回值`
+grep 可用于 shell 脚本，因为 grep 通过返回一个状态值来说明搜索的状态
+模板搜索成功，则返回 0
+搜索不成功，则返回 1
+搜索的文件不存在，则返回 2
+见参考文献9,写的非常的好    
+
 
 
 ## 参考
@@ -305,7 +312,7 @@ Arg：一些参数，可以指定输出文件。
 - [参考文献6、Linux umask命令](https://www.runoob.com/linux/linux-comm-umask.html)
 - [参考文献7、Linux nohup 命令](https://www.runoob.com/linux/linux-comm-nohup.html)
 - [参考文献8、sudo -E的意思](https://www.cnblogs.com/pinganzi/p/5254995.html)
-
+- [参考文献9、Linux 操作命令 grep](https://blog.51cto.com/11495268/2341830)
 
 
 
