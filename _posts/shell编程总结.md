@@ -293,17 +293,18 @@ Arg：一些参数，可以指定输出文件。
 ```
 见参考文献7,写的非常的好    
 
-(9)`grep命令返回值`
-grep 可用于 shell 脚本，因为 grep 通过返回一个状态值来说明搜索的状态
-模板搜索成功，则返回 0
-搜索不成功，则返回 1
-搜索的文件不存在，则返回 2
-见参考文献9,写的非常的好    
+(9)`grep命令返回值`   
+grep 可用于 shell 脚本，因为 grep 通过返回一个状态值来说明搜索的状态    
+模板搜索成功，则返回 0      
+搜索不成功，则返回 1      
+搜索的文件不存在，则返回 2    
+见参考文献9,写的非常的好       
 (10)`pkill和kill命令的区别`
-pkill是加进程cmd来结束进程；kill是加进程pid来结束进程。sigal通用。
-我是这样理解的。比如说dd if=/dev/zero of=/dev/null bs=1M count=20480000000一执行，在另个tty中ps axu找到了这条，那么你就输入pkill -15 dd就terminated它了。
-kill -9 进程号 暴力结束这个进程
-kill -15 进程号  优雅结束这个进程
+pkill是加进程cmd来结束进程；kill是加进程pid来结束进程。sigal通用。     
+我是这样理解的。比如说dd if=/dev/zero of=/dev/null bs=1M count=20480000000一执行，在另个tty中ps axu找到了这条，那么你就输入pkill -15 dd就terminated它了。     
+kill -9 进程号 暴力结束这个进程        
+kill -15 进程号  优雅结束这个进程    
+见参考文献10,写的非常的好   
 
 
 ## 参考
