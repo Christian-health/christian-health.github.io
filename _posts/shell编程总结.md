@@ -307,6 +307,22 @@ kill -9 进程号 暴力结束这个进程
 kill -15 进程号  优雅结束这个进程    
 见参考文献10,写的非常的好   
 
+(11)`/etc/sudoers`
+一、sudo执行命令的流程
+将当前用户切换到超级用户下，或切换到指定的用户下，
+然后以超级用户或其指定切换到的用户身份执行命令，执行完成后，直接退回到当前用户。
+具体工作过程如下：
+当用户执行sudo时，系统会主动寻找/etc/sudoers文件，判断该用户是否有执行sudo的权限
+-->确认用户具有可执行sudo的权限后，让用户输入用户自己的密码确认
+-->若密码输入成功，则开始执行sudo后续的命令
+
+二、不需要输入密码的情况
+1.root执行sudo时不需要输入密码(eudoers文件中有配置root ALL=(ALL) ALL这样一条规则)
+2.欲切换的身份与执行者的身份相同，不需要输入密码
+3./etc/sudoers文件设置为允许用户在不输入该用户的密码的情况下使用所有命令
+如设置允许wheel用户组中的用户在不输入该用户的密码的情况下使用所有命令
+（ %wheel        ALL=(ALL)       NOPASSWD: ALL）
+
 
 ## 参考
 
@@ -320,7 +336,7 @@ kill -15 进程号  优雅结束这个进程
 - [参考文献8、sudo -E的意思](https://www.cnblogs.com/pinganzi/p/5254995.html)
 - [参考文献9、Linux 操作命令 grep](https://blog.51cto.com/11495268/2341830)
 - [参考文献10、pkill和kill命令的区别](https://blog.51cto.com/zhukeqiang/1548207)
-
+- [参考文献11、sudo配置文件/etc/sudoers详解及实战用法](https://www.cnblogs.com/liujiacai/p/8179994.html)
 
 
 
