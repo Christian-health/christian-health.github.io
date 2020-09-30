@@ -1,3 +1,16 @@
+## -s参数
+-s   
+-s参数将不输出错误和进度信息。      
+`$ curl -s https://www.example.com`    
+上面命令一旦发生错误，不会显示错误信息。不发生错误的话，会正常显示运行结果。   
+如果想让 curl 不产生任何输出，可以使用下面的命令。   
+`$ curl -s -o /dev/null https://google.com`   
+
+-S  
+-S参数指定只输出错误信息，通常与-s一起使用。   
+`$ curl -s -o /dev/null https://google.com`   
+上面命令没有任何输出，除非发生错误。    
+
 ## -u参数
 -u参数用来设置服务器认证的用户名和密码。
 `$ curl -u 'bob:12345' https://google.com/login`
