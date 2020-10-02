@@ -238,24 +238,105 @@ ng
 02-变量子串内容  30:00看到这里
 
 
+# shell大杂烩知识点   
+(1) `>/dev/null 2>&1`        
+见参考文献3,写的非常的好     
 
+(2)`>/dev/null`     
 
+(3)`set -e 和 set +e的区别` 
+```
+set -e ： 执行的时候如果出现了返回值为非零，整个脚本 就会立即退出 
+set +e： 执行的时候如果出现了返回值为非零将会继续执行下面的脚本 
+```
+见参考文献4,写的非常的好    
 
+(4)`在shell里面${a%%.*}、${a##*.}`   
+```
+${varible##*string} 从左向右截取最后一个string后的字符串
+${varible#*string}从左向右截取第一个string后的字符串
+${varible%%string*}从右向左截取最后一个string后的字符串
+${varible%string*}从右向左截取第一个string后的字符串
+例子：
+$ MYVAR=foodforthought.jpg
+$ echo ${MYVAR##*fo}
+rthought.jpg
+$ echo ${MYVAR#*fo}
+odforthought.jpg
+```
+(5)`Linux umask命令`
+Linux umask命令指定在建立文件时预设的权限掩码。
+umask可用来设定[权限掩码]。[权限掩码]是由3个八进制的数字所组成，将现有的存取权限减掉权限掩码后，即可产生建立文件时预设的权限。
+```
+umask 022
+$ mkdir test1                       #创建目录  
+$ ls –d –l test1/                   #显示目录的详细信息  
+drwxr-xr-x 2 rootlocal rootlocal 4096 2011-9-19 21:46 test1/ 
+注意：在上面的输出信息中，"drwxr-xr-x"="777-022=755"。
+```
+(6)`:>`
+
+(7)`sudo -E -u`
+简单来说，就是加上-E选项后，用户可以在sudo执行时保留当前用户已存在的环境变量，不会被sudo重置，另外，如果用户对于指定的环境变量没有权限，则会报错。
+参考文献8
+
+(8)`Linux nohup 命令`
+nohup 英文全称 no hang up（不挂起），用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。
+```
+nohup Command [ Arg … ] [　& ]
+参数说明：
+Command：要执行的命令。
+
+Arg：一些参数，可以指定输出文件。
+
+&：让命令在后台执行，终端退出后命令仍旧执行。
+```
+见参考文献7,写的非常的好    
+
+(9)`grep命令返回值`   
+grep 可用于 shell 脚本，因为 grep 通过返回一个状态值来说明搜索的状态    
+模板搜索成功，则返回 0      
+搜索不成功，则返回 1      
+搜索的文件不存在，则返回 2    
+见参考文献9,写的非常的好          
+
+(10)`pkill和kill命令的区别`
+pkill是加进程cmd来结束进程；kill是加进程pid来结束进程。sigal通用。     
+我是这样理解的。比如说dd if=/dev/zero of=/dev/null bs=1M count=20480000000一执行，在另个tty中ps axu找到了这条，那么你就输入pkill -15 dd就terminated它了。     
+kill -9 进程号 暴力结束这个进程        
+kill -15 进程号  优雅结束这个进程    
+见参考文献10,写的非常的好   
+
+(11)`/etc/sudoers`
+一、sudo执行命令的流程
+将当前用户切换到超级用户下，或切换到指定的用户下，
+然后以超级用户或其指定切换到的用户身份执行命令，执行完成后，直接退回到当前用户。
+具体工作过程如下：
+当用户执行sudo时，系统会主动寻找/etc/sudoers文件，判断该用户是否有执行sudo的权限
+-->确认用户具有可执行sudo的权限后，让用户输入用户自己的密码确认
+-->若密码输入成功，则开始执行sudo后续的命令
+
+二、不需要输入密码的情况
+1.root执行sudo时不需要输入密码(eudoers文件中有配置root ALL=(ALL) ALL这样一条规则)
+2.欲切换的身份与执行者的身份相同，不需要输入密码
+3./etc/sudoers文件设置为允许用户在不输入该用户的密码的情况下使用所有命令
+如设置允许wheel用户组中的用户在不输入该用户的密码的情况下使用所有命令
+（ %wheel        ALL=(ALL)       NOPASSWD: ALL）
 
 
 ## 参考
 
 - [参考文献1、xargs 命令教程](http://www.ruanyifeng.com/blog/2019/08/xargs-tutorial.html)
-- []()
-- 
-- 
-
-
-
-
-
-
-
+- [参考文献2、tee命令](https://www.myfreax.com/linux-tee-command/)
+- [参考文献3、>/dev/null 2>&1](https://www.cnblogs.com/ultranms/p/9353157.html)
+- [参考文献4、shell 中的 set -e 和 set +e的区别](https://www.cnblogs.com/vanoraxnc/p/10728424.html)
+- [参考文献5、在shell里面${a%%.*}、${a##*.}](https://blog.csdn.net/long375577908/article/details/78498235)
+- [参考文献6、Linux umask命令](https://www.runoob.com/linux/linux-comm-umask.html)
+- [参考文献7、Linux nohup 命令](https://www.runoob.com/linux/linux-comm-nohup.html)
+- [参考文献8、sudo -E的意思](https://www.cnblogs.com/pinganzi/p/5254995.html)
+- [参考文献9、Linux 操作命令 grep](https://blog.51cto.com/11495268/2341830)
+- [参考文献10、pkill和kill命令的区别](https://blog.51cto.com/zhukeqiang/1548207)
+- [参考文献11、sudo配置文件/etc/sudoers详解及实战用法](https://www.cnblogs.com/liujiacai/p/8179994.html)
 
 
 
