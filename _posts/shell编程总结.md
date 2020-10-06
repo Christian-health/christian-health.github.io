@@ -323,6 +323,26 @@ kill -15 进程号  优雅结束这个进程
 如设置允许wheel用户组中的用户在不输入该用户的密码的情况下使用所有命令
 （ %wheel        ALL=(ALL)       NOPASSWD: ALL）
 
+(12)`:> file.txt`        
+冒号在shell中表示空指令。       
+原文如下：        
+```
+: 
+null command [colon]. This is the shell equivalent of a "NOP" (no op, a do-nothing operation). It
+may be considered a synonym for the shell builtin true. 
+The ":" command is itself a Bash builtin, and its exit status is true (0).
+```    
+所以：   
+`: > file` 用于清空文件   
+下面这种形式是Here Document的一种用法，用于注释一段代码块    
+```
+:<<BLOCK
+...
+segment
+...
+BLOCK
+```    
+
 
 ## 参考
 
