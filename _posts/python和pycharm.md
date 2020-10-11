@@ -106,3 +106,4 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> from asserts import assert_true
 >>> 
 ```
+7、同理可以下载我们需要的`Flask-0.10.1`
