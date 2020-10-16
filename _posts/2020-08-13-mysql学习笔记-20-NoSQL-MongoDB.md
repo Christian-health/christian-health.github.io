@@ -8,7 +8,25 @@ Mongodb 逻辑结构             			 MySQL逻辑结构
 集合（collection）							表
 文档（document）							数据行
 ```
+![mongdb存储数据库的数据的类型]()
 
+![mongodb的评价]()
+
+![mongodb的设计模式]()
+
+![mongodb的特点]()
+
+![mongodb和关系数据库的区别]()
+
+![MongoDB名称的来源]()
+
+![mysql在抄袭mogodb的功能]()
+
+![nosql四大家族]()
+
+![nosql优势]()
+
+![关系数据库和非关系数据库的对比]()
 
 ## 第二章：安装部署
 
