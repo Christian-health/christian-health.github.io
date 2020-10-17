@@ -30,27 +30,28 @@ Mongodb 逻辑结构             			 MySQL逻辑结构
 
 ## 第二章：安装部署
 
-1、系统准备
+#### 1、系统准备
 （1）`redhat`或`centos6.2`以上系统
-（2）系统开发包完整
+（2）系统开发包完整，比如c++安装包
 （3）`ip`地址和`hosts`文件解析正常
 （4）`iptables`防火墙&`SElinux`关闭
-（5）关闭大页内存机制
+（5）关闭大页内存机制。
 
 `root`用户下
 在`vi /etc/rc.local`最后添加如下代码
 ```
+#永久关闭
 if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
   echo never > /sys/kernel/mm/transparent_hugepage/enabled
 fi
 if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
    echo never > /sys/kernel/mm/transparent_hugepage/defrag
 fi
-		
+#临时关闭		
 echo never > /sys/kernel/mm/transparent_hugepage/enabled		
 echo never > /sys/kernel/mm/transparent_hugepage/defrag	
 ```
-其他系统关闭参照官方文档：	
+其他系统关闭参照官方文档，来关闭大页内存：	
 https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/
 ```
 为什么要关闭？
@@ -59,14 +60,14 @@ that reduces the overhead of Translation Lookaside Buffer (TLB)
 lookups on machines with large amounts of memory by using larger memory pages.
 However, database workloads often perform poorly with THP, 
 because they tend to have sparse rather than contiguous memory access patterns. 
-You should disable THP on Linux machines to ensure best performance with MongoDB.
+You should disable THP on Linux machines to ensure best performance with MongoDB.#需要关闭大页内存
 ```
 
 修改  `vim /etc/security/limits.conf`
-#*               -       nofile          65535
---------------------------------------------------------------
+`#*               -       nofile          65535`
 
-2、`mongodb`安装
+
+#### 2、`mongodb`安装
 （1）创建所需用户和组
 ```
 useradd mongod
@@ -130,21 +131,22 @@ fork=true
 使用配置文件启动`mongodb`
 `mongod -f /mongodb/conf/mongodb.conf`
 
+#### YAML模式配置文件：
 
-（YAML模式：）
---
 ```
 NOTE：
 YAML does not support tab characters for indentation: use spaces instead.
 ```
---系统日志有关  
+--系统日志有关的配置 
+
 ```
 systemLog:
    destination: file        
    path: "/mongodb/log/mongodb.log"    --日志位置
    logAppend: true					   --日志以追加模式记录
 ```
---数据存储有关  
+--数据存储有关的配置  
+
 ```
 storage:
    journal:
@@ -152,24 +154,28 @@ storage:
    dbPath: "/mongodb/data"            --数据路径的位置
 ```
 
--- 进程控制  
+-- 进程控制的配置 
+
 ```
 processManagement:
    fork: true                         --后台守护进程
    pidFilePath: <string>			  --pid文件的位置，一般不用配置，可以去掉这行，自动生成到data中
 ```
---网络配置有关   
+--网络配置有关的配置   
+```
 net:			
    bindIp: <ip>                       -- 监听地址，如果不配置这行是监听在0.0.0.0
    port: <port>						  -- 端口号,默认不配置端口号，是27017
-
--- 安全验证有关配置      
+```
+-- 安全验证有关配置的配置      
+```
 security:
   authorization: enabled              --是否打开用户名密码验证
+```
 
+--以下是复制集与分片集群有关配置
 
-------------------以下是复制集与分片集群有关----------------------  
-
+```
 replication:
  oplogSizeMB: <NUM>
  replSetName: "<REPSETNAME>"
@@ -185,10 +191,9 @@ replication:
 
 sharding:
    configDB: <string>
----
-.........
-++++++++++++++++++++++
-YAML例子
+```
+#### YAML例子
+```
 cat > /mongodb/conf/mongo.conf <<EOF
 systemLog:
    destination: file
@@ -209,14 +214,12 @@ EOF
 mongod -f /mongodb/conf/mongo.conf --shutdown
 mongod -f /mongodb/conf/mongo.conf   
 
-++++++++++++++++++++++
+```
+（9）`mongodb`的关闭方式
+`mongod -f mongodb.conf  --shutdown`
 
-
-（9）mongodb的关闭方式
-mongod -f mongodb.conf  --shutdown
-
-(10) systemd 管理(root)
-
+(10) `systemd` 管理(`root`)
+```shell
 [root@db01 ~]# cat > /etc/systemd/system/mongod.service <<EOF
 [Unit]
 Description=mongodb 
@@ -235,21 +238,21 @@ EOF
 [root@db01 ~]# systemctl restart mongod
 [root@db01 ~]# systemctl stop mongod
 [root@db01 ~]# systemctl start mongod
+```
 
----------------------------------------
+3、`mongodb`常用基本操作
 
-3、mongodb常用基本操作
-
-3.0  mongodb 默认存在的库
+3.0  `mongodb` 默认存在的库
+```
 > show databases;
 admin   0.000GB
 config  0.000GB
 local   0.000GB
-
+```
 3.1 命令种类
 
-数据库对象(库(database),表(collection),行(document))
-
+数据库对象(库(`database`),表(`collection`),行(`document`))
+```
 db.命令:
 DB级别命令
 db        当前在的库
@@ -269,9 +272,10 @@ rs.
 
 分片集群(sharding cluster)
 sh.
-
+```
 
 3.2、帮助
+```
 help
 KEYWORDS.help()
 KEYWORDS.[TAB]
@@ -282,63 +286,65 @@ db.help()
 db.a.help()
 rs.help()
 sh.help()
-
+```
 
 3.3 、常用操作
 
---查看当前db版本
-test> db.version()
+--查看当前`db`版本
+`test> db.version()`
 
 --显示当前数据库
-
+```
 test> db
 test
 或
 > db.getName()
 test
-
+```
 --查询所有数据库
-test> show dbs
+`test> show dbs`
 
 – 切换数据库
+```
 > use local
 switched to db local
-
-- 查看所有的collection
-show  tables;
+```
+- 查看所有的`collection`
+`show  tables;`
 
 – 显示当前数据库状态
+```
 test> use local
 switched to db local
 
 local> db.stats()
-
+```
 – 查看当前数据库的连接机器地址
+```
 > db.getMongo()
 connection to 127.0.0.1
 指定数据库进行连接
 默认连接本机test数据库
-
-------------------------------------------------
-4、mongodb对象操作：
-
+```
+4、`mongodb`对象操作：
+```
 mongo         mysql
 库    ----->  库
 集合  ----->  表
 文档  ----->  数据行
-
+```
 
 4.1 库的操作：
 
 – 创建数据库：
-当use的时候，系统就会自动创建一个数据库。
-如果use之后没有创建任何集合。
+当`use`的时候，系统就会自动创建一个数据库。
+如果`use`之后没有创建任何集合。
 系统就会删除这个数据库。
 
 – 删除数据库
 如果没有选择任何数据库，会删除默认的test数据库
 //删除test数据库
-
+```
 test> show dbs
 local 0.000GB
 test 0.000GB
@@ -348,10 +354,11 @@ switched to db test
 
 test> db.dropDatabase()   
 { "dropped" : "test", "ok" : 1 }
-
+```
 集合的操作：
  创建集合
 方法1
+```
 admin> use app
 switched to db app
 app> db.createCollection('a')
@@ -362,10 +369,10 @@ app> db.createCollection('b')
 a b 或
 > db.getCollectionNames()
 [ "a", "b" ]
-
+```
 
 方法2：当插入一个文档的时候，一个集合就会自动创建。
-
+```
 {id : "101" ,name : "zhangsan" ,age : "18" ,gender : "male"}
 
 use oldboy
@@ -373,9 +380,10 @@ db.oldguo.insert({id : "1021" ,name : "zhssn" ,age : "22" ,gender : "female",add
 
 > db.oldguo.find({id:"101"})
 { "_id" : ObjectId("5d36b8b6e62adeeaf0de00dc"), "id" : "101", "name" : "zhangsan", "age" : "18", "gender" : "male" }
-
+```
 
 查询数据:
+```
 > db.oldguo.find({id:"101"}).pretty()
 {
 	"_id" : ObjectId("5d36b8b6e62adeeaf0de00dc"),
@@ -407,13 +415,15 @@ db.oldguo.insert({id : "1021" ,name : "zhssn" ,age : "22" ,gender : "female",add
 	"telnum" : "110"
 }
 > 
-
+```
 删除集合
+```
 app> use app
 switched to db app
 app> db.log.drop() //删除集合
-
+```
 – 重命名集合
+```
 //把log改名为log1
 app> db.log.renameCollection("log1")
 { "ok" : 1 }
@@ -421,49 +431,51 @@ app> show collections
 a b c
 log1
 app
-
+```
 批量插入数据
-
+```
 for(i=0;i<10000;i++){db.log.insert({"uid":i,"name":"mongodb","age":6,"date":new
 Date()})}
+```
 
-
-Mongodb数据查询语句:
+`Mongodb`数据查询语句:
 
 – 查询集合中的记录数
-app> db.log.find() //查询所有记录
+`app> db.log.find() //查询所有记录`
 
 注：默认每页显示20条记录，当显示不下的的情况下，可以用it迭代命令查询下一页数据。
 设置每页显示数据的大小：
 
-> DBQuery.shellBatchSize=50; //每页显示50条记录
+```> DBQuery.shellBatchSize=50; //每页显示50条记录
 
 app> db.log.findOne() //查看第1条记录
 app> db.log.count() //查询总的记录数
-
+```
 – 删除集合中的记录数
+```
 app> db.log.remove({}) //删除集合中所有记录
 > db.log.distinct("name") //查询去掉当前集合中某列的重复数据
-
+```
 – 查看集合存储信息
+```
 app> db.log.stats()
 app> db.log.dataSize() //集合中数据的原始大小
 app> db.log.totalIndexSize() //集合中索引数据的原始大小
 app> db.log.totalSize() //集合中索引+数据压缩存储之后的大小    *****
 app> db.log.storageSize() //集合中数据压缩存储的大小
+```
 
-
-5、用户管理 *****
+5、用户管理
 
 注意：
-验证库，建立用户时use到的库，在使用用户时，要加上验证库才能登陆。
-对于管理员用户,必须在admin下创建.
+验证库，建立用户时`use`到的库，在使用用户时，要加上验证库才能登陆。
+对于管理员用户,必须在`admin`下创建.
 
-1. 建用户时,use到的库,就是此用户的验证库
+1. 建用户时,`use`到的库,就是此用户的验证库
 2. 登录时,必须明确指定验证库才能登录
-3. 通常,管理员用的验证库是admin,普通用户的验证库一般是所管理的库设置为验证库
-4. 如果直接登录到数据库,不进行use,默认的验证库是test,不是我们生产建议的.
-
+3. 通常,管理员用的验证库是`admin`,普通用户的验证库一般是所管理的库设置为验证库
+4. 如果直接登录到数据库,不进行`use`,默认的验证库是`test`,不是我们生产建议的.
+```
 use admin 
 mongo 10.0.0.51/admin
 
@@ -477,9 +489,10 @@ db.createUser
     ...
     ]
 }
-
+```
 
 基本语法说明：
+```
 user:用户名
 pwd:密码
 roles:
@@ -489,11 +502,11 @@ role：root, readWrite,read
 
 验证数据库：
 mongo -u oldboy -p 123 10.0.0.51/oldboy
-
--------------
+```
 用户管理例子：
 
--- 1. 创建超级管理员：管理所有数据库（必须use admin再去创建） *****
+-- 1. 创建超级管理员：管理所有数据库（必须use admin再去创建）
+```
 $ mongo
 use admin
 db.createUser(
@@ -503,34 +516,39 @@ db.createUser(
     roles: [ { role: "root", db: "admin" } ]
 }
 )
-
+```
 验证用户
-db.auth('root','root123')
+`db.auth('root','root123')`
 
 
 配置文件中，加入以下配置
+```
 security:
   authorization: enabled
-
-重启mongodb
+```
+重启`mongodb`
+```
 mongod -f /mongodb/conf/mongo.conf --shutdown 
 mongod -f /mongodb/conf/mongo.conf 
-
+```
 登录验证
+```
 mongo -uroot -proot123  admin
 mongo -uroot -proot123  10.0.0.51/admin
-
+```
 或者
+```
 mongo
 use admin
 db.auth('root','root123')
-
+```
 查看用户:
+```
 use admin
 db.system.users.find().pretty()
-
-==================
+```
 -- 2、创建库管理用户
+```
 mongo -uroot -proot123  admin
 
 use app
@@ -544,20 +562,21 @@ roles: [ { role: "dbAdmin", db: "app" } ]
 )
 
 db.auth('admin','admin')
-
+```
 登录测试
-mongo -uadmin -padmin 10.0.0.51/app
+`mongo -uadmin -padmin 10.0.0.51/app`
 
 
--- 3、创建对app数据库，读、写权限的用户app01 *****
+-- 3、创建对app数据库，读、写权限的用户`app01`
 
 （1）超级管理员用户登陆
-mongo -uroot -proot123 admin
+`mongo -uroot -proot123 admin`
 
 （2）选择一个验证库
-use app
+`use app`
 
 (3)创建用户
+```
 db.createUser(
 	{
 		user: "app01",
@@ -567,8 +586,9 @@ db.createUser(
 )
 
 mongo  -uapp01 -papp01 10.0.0.51/app
-
--- 4、创建app数据库读写权限的用户并对test数据库具有读权限：
+```
+-- 4、创建`app`数据库读写权限的用户并对`test`数据库具有读权限：
+```
 mongo -uroot -proot123 10.0.0.51/admin
 use app
 db.createUser(
@@ -577,8 +597,9 @@ user: "app03",
 pwd: "app03",
 roles: [ { role: "readWrite", db: "app" },
 { role: "read", db: "test" }]})
-
--- 5、查询mongodb中的用户信息
+```
+-- 5、查询`mongodb`中的用户信息
+```
 mongo -uroot -proot123 10.0.0.51/admin
 db.system.users.find().pretty()
 
@@ -602,43 +623,47 @@ db.system.users.find().pretty()
 		}
 	]
 }
+```
 
 
-
--- 6、删除用户（root身份登录，use到验证库）
+-- 6、删除用户（`root`身份登录，`use`到验证库）
 
 删除用户
+```
 # mongo -uroot -proot123 10.0.0.51/admin
 use app
 db.dropUser("app01")
+```
 
----------------------------------
-
-6. MongoDB复制集RS（ReplicationSet）******
+6. `MongoDB`复制集`RS`（`ReplicationSet`）
 
 6.1 基本原理
-基本构成是1主2从的结构，自带互相监控投票机制（Raft（MongoDB）  Paxos（mysql MGR 用的是变种））
+基本构成是1主2从的结构，自带互相监控投票机制`（Raft（MongoDB）  Paxos（mysql MGR 用的是变种））`
 如果发生主库宕机，复制集内部会进行投票选举，选择一个新的主库替代原有主库对外提供服务。同时复制集会自动通知
 客户端程序，主库已经发生切换了。应用就会连接到新的主库。
-6.2 Replication Set配置过程详解
+6.2 `Replication Set`配置过程详解
 6.2.1 规划
-三个以上的mongodb节点（或多实例）
+三个以上的`mongodb`节点（或多实例）
 6.2.2 环境准备
 多个端口：
-28017、28018、28019、28020
+`28017、28018、28019、28020`
 多套目录：
+```
 su - mongod 
 mkdir -p /mongodb/28017/conf /mongodb/28017/data /mongodb/28017/log
 mkdir -p /mongodb/28018/conf /mongodb/28018/data /mongodb/28018/log
 mkdir -p /mongodb/28019/conf /mongodb/28019/data /mongodb/28019/log
 mkdir -p /mongodb/28020/conf /mongodb/28020/data /mongodb/28020/log
-
+```
 多套配置文件
+```
 /mongodb/28017/conf/mongod.conf
 /mongodb/28018/conf/mongod.conf
 /mongodb/28019/conf/mongod.conf
 /mongodb/28020/conf/mongod.conf
+```
 配置文件内容:
+```
 cat > /mongodb/28017/conf/mongod.conf <<EOF
 systemLog:
   destination: file
@@ -676,18 +701,19 @@ EOF
 sed 's#28017#28018#g' /mongodb/28018/conf/mongod.conf -i
 sed 's#28017#28019#g' /mongodb/28019/conf/mongod.conf -i
 sed 's#28017#28020#g' /mongodb/28020/conf/mongod.conf -i
-
+```
 启动多个实例备用:
+```
 mongod -f /mongodb/28017/conf/mongod.conf
 mongod -f /mongodb/28018/conf/mongod.conf
 mongod -f /mongodb/28019/conf/mongod.conf
 mongod -f /mongodb/28020/conf/mongod.conf
 
 netstat -lnp|grep 280
-
+```
 6.3 配置普通复制集：
 1主2从，从库普通从库
-
+```
 mongo --port 28017 admin
 config = {_id: 'my_repl', members: [
                           {_id: 0, host: '10.0.0.51:28017'},
@@ -696,15 +722,15 @@ config = {_id: 'my_repl', members: [
           }    
 		  
 rs.initiate(config) 
-
+```
 
 查询复制集状态
-rs.status();
+`rs.status();`
 
 
 
-6.4 1主1从1个arbiter
-
+6.4 1主1从1个`arbiter`
+```
 mongo -port 28017 admin
 config = {_id: 'my_repl', members: [
                           {_id: 0, host: '10.0.0.51:28017'},
@@ -712,15 +738,16 @@ config = {_id: 'my_repl', members: [
                           {_id: 2, host: '10.0.0.51:28019',"arbiterOnly":true}]
           }                
 rs.initiate(config) 
-
+```
 
 6.5 复制集管理操作
 
 6.5.1 查看复制集状态
+```
 rs.status();    //查看整体复制集状态
 rs.isMaster(); // 查看当前是否是主节点
 rs.conf()；   //查看复制集配置信息
-
+```
 
 6.5.2 添加删除节点
 rs.remove("ip:port"); // 删除一个节点
@@ -1579,3 +1606,7 @@ Ops Manager
 ## 参考
 
  https://zhuanlan.zhihu.com/p/91288179 
+
+```
+
+```
