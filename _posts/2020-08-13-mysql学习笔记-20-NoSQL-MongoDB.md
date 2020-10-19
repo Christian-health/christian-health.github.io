@@ -8,6 +8,8 @@ Mongodb 逻辑结构             			 MySQL逻辑结构
 集合（collection）							表
 文档（document）							数据行
 ```
+`mongodb`分的很清楚，该是开发的就是开发的，该是运维的就是运维的，两边根本不搭边。因为`mongodb`基本上不需要优化什么，你建立一个索引就完事了。大部分时间都在做架构的设计和架构的运维。
+
 ![mongdb存储数据库的数据的类型]()
 
 ![mongodb的评价]()
@@ -646,13 +648,14 @@ db.system.users.find().pretty()
 use app
 db.dropUser("app01")
 ```
-
+**前面讲的一点都不详细，关于mongodb的基本操作，自己学习总结一下。**09讲
 #### 6. `MongoDB`复制集`RS`（`ReplicationSet`）
 
 #### 6.1 基本原理
 基本构成是1主2从的结构，自带互相监控投票机制`（Raft（MongoDB）  Paxos（mysql MGR 用的是变种））`
 如果发生主库宕机，复制集内部会进行投票选举，选择一个新的主库替代原有主库对外提供服务。同时复制集会自动通知
 客户端程序，主库已经发生切换了。应用就会连接到新的主库。
+
 ###### 6.2 `Replication Set`配置过程详解
 6.2.1 规划
 三个以上的`mongodb`节点（或多实例）
