@@ -267,16 +267,14 @@ admin
 db.命令:
 DB级别命令
 db        当前在的库
-db.[TAB]  类似于linux中的tab功能
+db.[TAB]  类似于linux中的tab功能,补全用的
 db.help() db级别的命令使用帮助
-
 
 collection级别操作:
 db.Collection_name.xxx
 
 document级别操作:
 db.t1.insert()  #向t1数据库中插入
-
 
 复制集有关(replication set):
 rs.
@@ -285,7 +283,8 @@ rs.
 sh.
 ```
 
-3.2、帮助
+###### 3.2、帮助
+
 ```
 help
 KEYWORDS.help()
@@ -299,7 +298,7 @@ rs.help()
 sh.help()
 ```
 
-3.3 、常用操作
+###### 3.3 、常用操作
 
 --查看当前`db`版本
 `test> db.version()`
@@ -337,7 +336,8 @@ connection to 127.0.0.1
 指定数据库进行连接
 默认连接本机test数据库
 ```
-4、`mongodb`对象操作：
+#### 4、`mongodb`对象操作：
+
 ```
 mongo         mysql
 库    ----->  库
@@ -345,16 +345,17 @@ mongo         mysql
 文档  ----->  数据行
 ```
 
-4.1 库的操作：
+###### 4.1 库的操作：
 
 – 创建数据库：
-当`use`的时候，系统就会自动创建一个数据库。
-如果`use`之后没有创建任何集合。
+当`use`的时候，系统就会自动创建一个数据库。例如 `use yang`就会自动创建一个`yang`的数据库。
+如果`use`之后没有创建任何集合。那么`yang`数据库就会被删除掉。
 系统就会删除这个数据库。
 
 – 删除数据库
-如果没有选择任何数据库，会删除默认的test数据库
+如果没有选择任何数据库，会删除默认的`test`数据库
 //删除test数据库
+
 ```
 test> show dbs
 local 0.000GB
@@ -476,7 +477,7 @@ app> db.log.totalSize() //集合中索引+数据压缩存储之后的大小    *
 app> db.log.storageSize() //集合中数据压缩存储的大小
 ```
 
-5、用户管理
+#### 5、用户管理
 
 注意：
 验证库，建立用户时`use`到的库，在使用用户时，要加上验证库才能登陆。
@@ -646,19 +647,20 @@ use app
 db.dropUser("app01")
 ```
 
-6. `MongoDB`复制集`RS`（`ReplicationSet`）
+#### 6. `MongoDB`复制集`RS`（`ReplicationSet`）
 
-6.1 基本原理
+#### 6.1 基本原理
 基本构成是1主2从的结构，自带互相监控投票机制`（Raft（MongoDB）  Paxos（mysql MGR 用的是变种））`
 如果发生主库宕机，复制集内部会进行投票选举，选择一个新的主库替代原有主库对外提供服务。同时复制集会自动通知
 客户端程序，主库已经发生切换了。应用就会连接到新的主库。
-6.2 `Replication Set`配置过程详解
+###### 6.2 `Replication Set`配置过程详解
 6.2.1 规划
 三个以上的`mongodb`节点（或多实例）
 6.2.2 环境准备
 多个端口：
 `28017、28018、28019、28020`
 多套目录：
+
 ```
 su - mongod 
 mkdir -p /mongodb/28017/conf /mongodb/28017/data /mongodb/28017/log
