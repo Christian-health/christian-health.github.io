@@ -35,10 +35,11 @@ Mongodb 逻辑结构             			 MySQL逻辑结构
 （2）系统开发包完整，比如c++安装包
 （3）`ip`地址和`hosts`文件解析正常
 （4）`iptables`防火墙&`SElinux`关闭
-（5）关闭大页内存机制。
+（5）**关闭大页内存机制**。
 
 `root`用户下
 在`vi /etc/rc.local`最后添加如下代码
+
 ```
 #永久关闭
 if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
@@ -60,7 +61,8 @@ that reduces the overhead of Translation Lookaside Buffer (TLB)
 lookups on machines with large amounts of memory by using larger memory pages.
 However, database workloads often perform poorly with THP, 
 because they tend to have sparse rather than contiguous memory access patterns. 
-You should disable THP on Linux machines to ensure best performance with MongoDB.#需要关闭大页内存
+You should 【disable】THP on Linux machines to ensure best performance with MongoDB.
+#需要关闭大页内存
 ```
 
 修改  `vim /etc/security/limits.conf`
@@ -69,15 +71,15 @@ You should disable THP on Linux machines to ensure best performance with MongoDB
 
 #### 2、`mongodb`安装
 （1）创建所需用户和组
-```
+```shell
 useradd mongod
 passwd mongod
 ```
 （2）创建`mongodb`所需目录结构
-```
-	mkdir -p /mongodb/conf
-	mkdir -p /mongodb/log
-	mkdir -p /mongodb/data
+```shell
+	mkdir -p /mongodb/conf   #配置
+	mkdir -p /mongodb/log    #日志
+	mkdir -p /mongodb/data   #数据
 ```
 （3）上传并解压软件到指定位置
 上传到：
@@ -85,7 +87,9 @@ passwd mongod
 解压：
 `tar xf mongodb-linux-x86_64-rhel70-3.2.16.tgz`
 拷贝目录下`bin`程序到`/mongodb/bin`
-`cp -a /server/tools/mongodb-linux-x86_64-rhel70-3.2.16/bin/* /mongodb/bin`
+`cp -a /server/tools/mongodb-linux-x86_64-rhel70-3.2.16/bin/* /mongodb/bin`  
+
+`cp -a` 保留原文件属性的前提下复制文件  
 
 （4）设置目录结构权限
 `chown -R mongod:mongod /mongodb`
@@ -136,10 +140,11 @@ fork=true
 ```
 NOTE：
 YAML does not support tab characters for indentation: use spaces instead.
+# YAML不支持使用制表符进行缩进：请使用空格。
 ```
 --系统日志有关的配置 
 
-```
+```yaml
 systemLog:
    destination: file        
    path: "/mongodb/log/mongodb.log"    --日志位置
@@ -147,35 +152,36 @@ systemLog:
 ```
 --数据存储有关的配置  
 
-```
+```yaml
 storage:
    journal:
-      enabled: true
+      enabled: true                   --是否开启日志redo
    dbPath: "/mongodb/data"            --数据路径的位置
 ```
 
 -- 进程控制的配置 
 
-```
+```yaml
 processManagement:
-   fork: true                         --后台守护进程
+   fork: true                         --后台守护进程    后台运行还是前台运行
    pidFilePath: <string>			  --pid文件的位置，一般不用配置，可以去掉这行，自动生成到data中
 ```
 --网络配置有关的配置   
-```
+```yaml
 net:			
    bindIp: <ip>                       -- 监听地址，如果不配置这行是监听在0.0.0.0
    port: <port>						  -- 端口号,默认不配置端口号，是27017
 ```
 -- 安全验证有关配置的配置      
-```
+
+```yaml
 security:
   authorization: enabled              --是否打开用户名密码验证
 ```
 
---以下是复制集与分片集群有关配置
+--以下是`复制集`与`分片集群`有关配置
 
-```
+```yaml
 replication:
  oplogSizeMB: <NUM>
  replSetName: "<REPSETNAME>"
@@ -193,7 +199,7 @@ sharding:
    configDB: <string>
 ```
 #### YAML例子
-```
+```shell
 cat > /mongodb/conf/mongo.conf <<EOF
 systemLog:
    destination: file
@@ -218,7 +224,7 @@ mongod -f /mongodb/conf/mongo.conf
 （9）`mongodb`的关闭方式
 `mongod -f mongodb.conf  --shutdown`
 
-(10) `systemd` 管理(`root`)
+(10) `systemd` 管理(`root`)  使用`systemctl`方式管理`mongodb`
 ```shell
 [root@db01 ~]# cat > /etc/systemd/system/mongod.service <<EOF
 [Unit]
@@ -240,19 +246,24 @@ EOF
 [root@db01 ~]# systemctl start mongod
 ```
 
-3、`mongodb`常用基本操作
+#### 3、`mongodb`常用基本操作
 
-3.0  `mongodb` 默认存在的库
+###### 3.0  `mongodb` 默认存在的库
+
 ```
-> show databases;
+> show databases;   #三个mongodb系统的库
 admin   0.000GB
 config  0.000GB
 local   0.000GB
 ```
-3.1 命令种类
+###### 3.1 命令种类
 
-数据库对象(库(`database`),表(`collection`),行(`document`))
+数据库对象(库(`database`)，表(`collection`)，行(`document`))
 ```
+>>use admin;
+>>db  查看当前所在的数据库，类似于Linux中的pwd
+admin
+
 db.命令:
 DB级别命令
 db        当前在的库
@@ -264,7 +275,7 @@ collection级别操作:
 db.Collection_name.xxx
 
 document级别操作:
-db.t1.insert()
+db.t1.insert()  #向t1数据库中插入
 
 
 复制集有关(replication set):
@@ -1605,8 +1616,7 @@ Ops Manager
 
 ## 参考
 
- https://zhuanlan.zhihu.com/p/91288179 
+ https://zhuanlan.zhihu.com/p/91288179  
 
-```
-
-```
+- [参考文献1、大页内存机制](https://blog.csdn.net/jiayanhui2877/article/details/15341665)_
+- 
