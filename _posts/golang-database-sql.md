@@ -3,6 +3,4 @@
 
 
 ## 参考
-[]()
-GO数据库教程: DATABASE/SQL
-(1)http://vonng.com/blog/go-database-tutorial/
+- [1、GO数据库教程: DATABASE/SQL](http://vonng.com/blog/go-database-tutorial/)
