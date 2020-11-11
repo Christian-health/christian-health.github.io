@@ -42,7 +42,7 @@ func Process(log LogIf) {
 }
 
 ```
-
+(3)、我们称常驻内存的为服务，如何才能上电之后常驻内存？使用fx.lifecycle,在NewLog()
 ()、层级调用
 ```
 router层   --> control层
