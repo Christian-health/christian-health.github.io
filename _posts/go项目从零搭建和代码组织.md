@@ -17,7 +17,7 @@ type Log struct {
 
 
 (2)、有一个struct那么就可以有一个对应的interface，interface中是对应的struct对应的函数，那么将来需要传入这个
-struct类型的参数，就可设置为参数类型是LogIf，比如如下:
+struct类型的参数，就可设置为参数类型是LogIF，比如如下:
 ```
 type Log struct {
     a   A
@@ -32,12 +32,12 @@ func (s Log) GetB() B {
     return s.b
 }
 
-type LogIf interface {
+type LogIF interface {
     GetA() A
     GetB() B 
 }
-//注意这个函数的参数是LogIf，那么这里可以使用Log传入，也就是  Process(Log)
-func Process(log LogIf) {
+//注意这个函数的参数是LogIF，那么这里可以使用Log传入，也就是  Process(Log)
+func Process(log LogIF) {
 
 }
 
