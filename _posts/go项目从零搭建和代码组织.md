@@ -1,5 +1,5 @@
 
-代码组织：
+代码组织：   
 （1）基本上有一个struct那么就会有一个new struct,比如如下:
 ```
 type Log struct {
@@ -13,10 +13,37 @@ type Log struct {
         b:b
     }
 }
+```
 
+
+(2)、有一个struct那么就可以有一个对应的interface，interface中是对应的struct对应的函数，那么将来需要传入这个
+struct类型的参数，就可设置为参数类型是LogIf，比如如下:
+```
+type Log struct {
+    a   A
+    b   B
+}
+
+func (s Log) GetA() A {
+    return s.a
+}
+
+func (s Log) GetB() B {
+    return s.b
+}
+
+type LogIf interface {
+    GetA() A
+    GetB() B 
+}
+//注意这个函数的参数是LogIf，那么这里可以使用Log传入，也就是  Process(Log)
+func Process(log LogIf) {
+
+}
 
 ```
-(2)、层级调用
+
+()、层级调用
 ```
 router层   --> control层
 control层  -->  app层 -->  
@@ -25,7 +52,7 @@ app层 -->  app层
       -->  provider层 
 domain层 =====> ***_service.go
 ```
-(3)、代码的目录
+()、代码的目录
 ```
 ppmc //根目录
 --gdto(adto)  global dto
