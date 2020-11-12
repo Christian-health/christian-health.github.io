@@ -80,6 +80,10 @@ ppmc //根目录
             --provider
 --ppmc-proc
 --ppmc-south
+            --domain
+                    --provider-itfc  #注意这里domain一般是包含调用provider，但是我们会把provider层对应的接口，放在domain层的provider-itfc中，而不是防止在provider目录层
+                    也就是domain层中函数provider层中的方法对应的接口
+            --provider
 --main
 --provider
 --router
