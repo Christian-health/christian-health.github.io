@@ -42,7 +42,7 @@ func Process(log LogIF) {
 }
 
 ```
-(3)、我们称常驻内存的为服务，如何才能上电之后常驻内存？使用fx.lifecycle,在NewLog()
+(3)、我们称常驻内存的为服务，如何才能上电之后常驻内存？使用fx.lifecycle,在NewLog()   
 ()、层级调用
 ```
 router层   --> control层
@@ -51,6 +51,8 @@ control层  -->  app层 -->
 app层 -->  app层 
       -->  provider层 
 domain层 =====> ***_service.go
+
+因为是router层到control层，然后control层到app层。那么如果我不走路由而是直接调用的化，那么需要直接调用app层，从app层作为入口。
 ```
 ()、代码的目录
 ```
