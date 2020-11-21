@@ -23,6 +23,12 @@ One Line panics
 Format strings
 取消他们的选中，点击 Applay, 还你一个不再夹带 GoLand 私货的代码编辑区域
 ```
+#### (2)golang 安装 gofmt与goimports
+https://xiaozhou.net/goland-gofmt-and-goimports-2018-08-24.html
+
+#### (3)goland 激活方式
+http://idea.medeming.com/code/
+
 
 ## 参考
 - [解决vscode编写go代码时提示过慢(gopls)](https://blog.csdn.net/zhetmdoubeizhanyong/article/details/102534172)
