@@ -29,6 +29,9 @@ https://xiaozhou.net/goland-gofmt-and-goimports-2018-08-24.html
 #### (3)goland 激活方式
 http://idea.medeming.com/code/
 
+#### (4)goland 安装golint
+https://www.cnblogs.com/kotagan/p/11364499.html
+
 
 ## 参考
 - [解决vscode编写go代码时提示过慢(gopls)](https://blog.csdn.net/zhetmdoubeizhanyong/article/details/102534172)
