@@ -36,11 +36,12 @@ https://www.artacode.com/posts/supervisor/
 
 
 
-https://www.hwholiday.com/2018/supervisor/
-
-
 
 [https://www.shuai-iot.xin/2017/12/09/2017-12-09-Supervisor%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/](https://www.shuai-iot.xin/2017/12/09/2017-12-09-Supervisor使用入门/)
 
 
 
+
+
+
+https://www.cnblogs.com/xuezhigu/archive/2004/01/13/7660203.html
