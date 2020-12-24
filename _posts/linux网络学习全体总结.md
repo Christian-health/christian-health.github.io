@@ -229,6 +229,8 @@ options bond0 miimon=100 mode=1 primary=eth0
 
 ### (8.1) Briged（桥接模式）
 
+
+
 https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-action.html
 
 这篇文章的所有参考文献都需要看。很重要。
