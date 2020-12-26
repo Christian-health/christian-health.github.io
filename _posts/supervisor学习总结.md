@@ -45,3 +45,7 @@ https://www.artacode.com/posts/supervisor/
 
 
 https://www.cnblogs.com/xuezhigu/archive/2004/01/13/7660203.html
+
+
+
+http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html
