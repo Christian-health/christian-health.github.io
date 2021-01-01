@@ -229,6 +229,11 @@ options bond0 miimon=100 mode=1 primary=eth0
 
 ### (8.1) Briged（桥接模式）
 
+### (8.2) NAT（NAT模式）
+按照这个配置成功
+https://blog.51cto.com/13648313/2164309
+https://blog.51cto.com/yangxiaowei/1955553
+
 
 
 https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-action.html
