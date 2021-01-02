@@ -704,7 +704,7 @@ virtual_server 10.10.10.100 80 { #集群所使用的VIP和端口
 
 ## 5.3 Heartbeat-Nginx
 
-![sgg-heartbeat01]()
+![sgg-heartbeat01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-heartbeat01.jpg?raw=true)
 
 `Heartbeat`使用一组脚本的方式进行检测和切换。所以原理不像`Keepalived`那么复杂。
 
@@ -818,7 +818,7 @@ node www.centos1.com
 node www.centos2.com
 ```
 
-![sgg-heartbeat02]()
+![sgg-heartbeat02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-heartbeat02.jpg?raw=true)
 
 #### 9、修改源配置文件
 
