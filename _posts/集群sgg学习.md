@@ -182,7 +182,7 @@
 
 ![ssg-lvs-tun工作模式04]()
 
-# 3、实验
+# 3、负载均衡集群实验
 
 ![sgg-实验01]()
 
@@ -202,7 +202,7 @@
 
 
 
-# 4、调度算法
+# 4、负载均衡集群调度算法
 
 ## 4.1、调度算法基本分类（通用的调度算法）
 
@@ -280,6 +280,136 @@ HTTPS   安全   配置    花钱
 
 
 
+## 5、高可用集群
+
+## 5.1、高可用集群的说明
+
+```
+高可用：尽可能的提高服务的可用性
+	99  基础
+	999 一般要做到，原因是可用性越高，资金成本越高。
+	9999 需要硬件设备支持
+	99999 理论上的概念
+	
+	实现原理：心跳检测
+	
+服务：
+	有状态(在N断时间之后，把它添加上，在功能上没有区别，因为数据库中的数据可能已经差很多了)
+		MYSQL 	
+	无状态(在N断时间之后，把它添加上，在功能上没有任何的区别)
+		Apache
+		LVS
+所以无状态服务好实现高可用，而有状态的不好实现高可用，但是也可以实现。
+
+ifconfig eth0:0 10.10.10.100 netmask 255.255.255.0
+```
+
+![sgg-LVS-调度算法06]()
+
+### 问题1、上面的图如果后面的`apache`服务器挂了会发生什么？
+
+```shell
+# 脚本的思想：循环判断我们拥有的真实服务器的节点，它的状态是否正常。如果正常，那么静默，等待下次循环。如果不正常，那么添加或者删除。这个脚本在负载均衡器节点执行。
+
+#!/bin/bash
+#=============================================================================
+VIP=10.10.10.100      #集群虚拟IP
+CPORT=80        #定义集群端口
+FAIL_BACK=127.0.0.1     #本机回环地址
+RS=("10.10.10.12" "10.10.10.13")  #编写集群地址
+declare -a RSSTATUS       #变量RSSTATUS定义为数组态
+RW=("2" "1")
+RPORT=80        #定义集群端口
+TYPE=g          #制定LVS工作模式：g=DR m=NAT
+CHKLOOP=3
+LOG=/var/log/ipvsmonitor.log
+
+#=============================================================================
+
+addrs() {
+  ipvsadm -a -t $VIP:$CPORT -r $1:$RPORT -$TYPE -w $2
+  [ $? -eq 0 ] && return 0 || return 1
+}
+
+delrs() {
+  ipvsadm -d -t $VIP:$CPORT -r $1:$RPORT
+  [ $? -eq 0 ] && return 0 || return 1
+}
+
+checkrs() {
+  local I=1
+  
+  while [ $I -le $CHKLOOP ]
+  do
+    if curl --connect-timeout 1 http://$1 &> /dev/null
+    then
+      return 0
+    fi
+    
+    let I++
+  done
+  
+  return 1
+}
+
+initstatus() {
+  
+  local I
+  local COUNT=0;
+
+  for I in ${RS[*]}
+  do
+    if ipvsadm -L -n | grep "$I:$RPORT" && > /dev/null
+    then
+    
+      
+      RSSTATUS[$COUNT]=1
+    else
+      RSSTATUS[$COUNT]=0
+    fi
+      let COUNT++
+  done
+}
+
+#=============================================================================
+initstatus
+
+while :; do
+
+  let COUNT=0
+  for I in ${RS[*]}
+  do
+    if checkrs $I
+    then
+      if [ ${RSSTATUS[$COUNT]} -eq 0 ]
+      then
+                    addrs $I ${RW[$COUNT]}
+                  [ $? -eq 0 ] && RSSTATUS[$COUNT]=1 && echo "`date +'%F %H:%M:%S'`, $I is back." >> $LOG
+      fi
+    else
+                  if [ ${RSSTATUS[$COUNT]} -eq 1 ]
+      then
+                    delrs $I
+                    [ $? -eq 0 ] && RSSTATUS[$COUNT]=0 && echo "`date +'%F %H:%M:%S'`, $I is gone." >> $LOG
+      fi
+    fi
+    
+    let COUNT++
+  done
+  sleep 5
+done
+```
+
+### 问题2、上面解决了真实服务器挂掉的问题，那么如果我们的`LVS`挂了怎么办？
+
+所以我们需要对`LVS`实现高可用，那么我们使用的就是`keepalived`
+
+
+
+## 5.2、`Keepalived原理`
+
+![]()
+
 
 
 
@@ -289,6 +419,13 @@ HTTPS   安全   配置    花钱
 
 
 &emsp
+
+# 参考
+
+- [LVS健康检查脚本](https://www.cnblogs.com/lyshark/p/10222252.html)
+- 
+
+
 
 
 
