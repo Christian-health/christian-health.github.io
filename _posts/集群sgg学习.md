@@ -8,11 +8,11 @@
 
 ## 1.2、集群的分类
 
-![sgg-集群分类01]()
+![sgg-集群分类01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%9B%86%E7%BE%A4%E5%88%86%E7%B1%BB01.jpg?raw=true)
 
-![sgg-集群分类02]()
+![sgg-集群分类02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%9B%86%E7%BE%A4%E5%88%86%E7%B1%BB02.jpg?raw=true)
 
-![sgg-集群分类03]()
+![sgg-集群分类03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%9B%86%E7%BE%A4%E5%88%86%E7%B1%BB03.jpg?raw=true)
 
 
 
@@ -28,7 +28,7 @@
 
 ### 2.1.2、按照工作层级进行分类
 
-​	![ssg-负载均衡集群01]()
+​	![ssg-负载均衡集群01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A401.jpg?raw=true)
 
 &emsp; `F5`工作可以在数据链路层，比如我国的网络是分成移动、电信、网通三家主体的，`F5`的在数据链路层的工作原理就是看来源
 
@@ -45,7 +45,7 @@
 ## 2.2、负载均衡集群原理
 
 ### 2.2.1、 四层工作逻辑
-​	![sgg-负载均衡集群原理01]()
+​	![sgg-负载均衡集群原理01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%8601.jpg?raw=true)
 &emsp;`LVS`只是改动了一下`IP`地址，根本就没有读取报文的内容，所以这样的设计就能减轻很大的压力，提高性能。我只是进行了一
 
 些地址信息的更改，没有数据转发，没有涉及真实的流量转发和流量生产。这就是`LVS`的性能好的原因。
@@ -56,13 +56,13 @@
 
 ### 2.2.2 、七层工作逻辑
 
-​	![sgg-负载均衡集群原理02]()
+​	![sgg-负载均衡集群原理02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%8602.jpg?raw=true)
 
 &emsp;注意`Nginx`这张图就好比。一个物流批发站，货物从西安到鹤岗经过这个物流批发站，**会进入**物流批发站，所以这就会对我们
 
 的物流站有很大的压力，所以左边客户到`Nginx`是一个`TCP`连接。而右边`Nginx`到真实服务器是另外的一个`TCP`连接。
 
-​	![sgg-负载均衡集群原理03]()
+​	![sgg-负载均衡集群原理03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%8603.jpg?raw=true)
 
 &emsp;所以，`Nginx`的负载均衡能力要比`LVS`差很多。那么为什么我们还要有`Nginx`而不是一直的使用`LVS`。就是因为使用场景的不
 
@@ -80,11 +80,11 @@
 
 ## 2.3、`LVS`工作模式
 
-​	![sgg-LVS工作模式01]()
+​	![sgg-LVS工作模式01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F01.jpg?raw=true)
 
 &emsp;我们无法直接修改内核配置文件，所以需要一个命令行管理工具进行触发。这个工具就是`ipvsadm`。
 
-![sgg-LVS工作模式02]()
+![sgg-LVS工作模式02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F02.jpg?raw=true)
 
 ### 2.3.1、`LVS-NAT`工作模式
 
@@ -94,37 +94,37 @@
 
 &emsp;`SNAT`技术就是源地址转换，源地址进行更改。
 
-![ssg-lvs-nat工作模式01]()
+![ssg-lvs-nat工作模式01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-nat%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F01.jpg?raw=true)
 
-![ssg-lvs-nat工作模式02]()
+![ssg-lvs-nat工作模式02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-nat%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F02.jpg?raw=true)
 
 &emsp;这样做会出现问题，因为数据包返回的源地址和我发送请求时候的原地址不同，所以要进行源地址转换。所以有下图：
 
-![ssg-lvs-nat工作模式03]()
+![ssg-lvs-nat工作模式03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-nat%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F03.jpg?raw=true)
 
-![ssg-lvs-nat工作模式04]()
+![ssg-lvs-nat工作模式04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-nat%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F04.jpg?raw=true)
 
 ### 2.3.2、`LVS-DR`工作模式
 
 &emsp;负载调度器和真实服务器要处于同一个广播域中。
 
-![ssg-lvs-dr工作模式01]()
+![ssg-lvs-dr工作模式01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-dr%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F01.jpg?raw=true)
 
-![ssg-lvs-dr工作模式02]()
+![ssg-lvs-dr工作模式02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-dr%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F02.jpg?raw=true)
 
-![ssg-lvs-dr工作模式03]()
+![ssg-lvs-dr工作模式03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-dr%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F03.jpg?raw=true)
 
 &emsp;从上图可以看到如果这样的进行转发，又发生了`NAT`模型中发生的问题。客户端收到的包数据中的源`IP`发生了变更。所以有了如下的方案：
 
-![ssg-lvs-dr工作模式04]()
+![ssg-lvs-dr工作模式04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-dr%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F04.jpg?raw=true)
 
 &emsp;这样通过上面的方式就解决了这个，客户端收到的包数据中的源`IP`发生了变更的问题。
 
-![ssg-lvs-dr工作模式05]()
+![ssg-lvs-dr工作模式05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-dr%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F05.jpg?raw=true)
 
-&emsp;在`DR`模式下面有一种问题，修改`DMAC`之后，把这个数据包从新发送到广播域中，为了让`RealServer`能接受这个数据包，我们给
+![ssg-lvs-dr工作模式06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-dr%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F06.jpg?raw=true)
 
-&emsp;`RealServer`也配置了`Director`的`IP`，那么如何防止`IP`地址出现问题，给`IP`地址添加了一个`lo:0 10.10.10.100`，为了防
+&emsp;在`DR`模式下面有一种问题，修改`DMAC`之后，把这个数据包从新发送到广播域中，为了让`RealServer`能接受这个数据包，我们给`RealServer`也配置了`Director`的`IP`，那么如何防止`IP`地址出现问题，给`IP`地址添加了一个`lo:0 10.10.10.100`，为了防
 
 止一个广播域中存在多个同样的`IP`地址，产生冲突，那么就需要对`ARP`进行相应的设置。
 
