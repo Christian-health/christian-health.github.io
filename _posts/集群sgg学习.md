@@ -280,7 +280,7 @@ HTTPS   安全   配置    花钱
 
 
 
-## 5、高可用集群
+# 5、高可用集群
 
 ## 5.1、高可用集群的说明
 
@@ -301,12 +301,12 @@ HTTPS   安全   配置    花钱
 		LVS
 所以无状态服务好实现高可用，而有状态的不好实现高可用，但是也可以实现。
 
-ifconfig eth0:0 10.10.10.100 netmask 255.255.255.0
+
 ```
 
 ![sgg-LVS-调度算法06]()
 
-### 问题1、上面的图如果后面的`apache`服务器挂了会发生什么？
+## 问题1、上面的图如果后面的`apache`服务器挂了会发生什么？
 
 ```shell
 # 脚本的思想：循环判断我们拥有的真实服务器的节点，它的状态是否正常。如果正常，那么静默，等待下次循环。如果不正常，那么添加或者删除。这个脚本在负载均衡器节点执行。
@@ -400,7 +400,7 @@ while :; do
 done
 ```
 
-### 问题2、上面解决了真实服务器挂掉的问题，那么如果我们的`LVS`挂了怎么办？
+## 问题2、上面解决了真实服务器挂掉的问题，那么如果我们的`LVS`挂了怎么办？
 
 所以我们需要对`LVS`实现高可用，那么我们使用的就是`keepalived`
 
@@ -410,15 +410,503 @@ done
 
 ![]()
 
+`Keepalived`是专门为`LVS`做的健康状态检查的工具。
+
+&emsp;不光是服务器需要高可用，其实很多网络设备也是需要高可用的，比如交换机。所以很早就有解决交换机等网络设备的高可用方
+
+案，就是`VRRP`。而`Keepalived`就是使用已经成熟的`VRRP`协议。
+
+&emsp;前面我们演示过`LVS`是不支持，后端服务器健康监测的，那么所以写了一个`shell`脚本用来进行健康状态监测。但是
+
+`Keepalived`是支持对后端服务器的健康状态监测的。而且`Keepalived`里面集成了`LVS`的模块。所以使用`Keepalived`可以实
+
+现健康，对后端服务器的增删。
+
+### 5.2.1实验
+
+接下来实验以下`Keepalived`：
+
+#### 1、主`LVS`需要做的事情：
+
+```
+
+(1) 关闭网卡守护进程,每一台实验机器都要关闭，无论是真实服务器还是负载均衡器
+	service NetworkManager stop && chkconfig NetworkManager off
+(2) 添加一个网卡当做vip使用
+    cd /etc/sysconfig/network-scripts
+    cp -a ifconfig-eth0  ifconfig-eth0:0
+(3) vi ifcfig-eth0:0
+    设备名改成eth0:0
+    IP地址改成静态的10.10.10.100
+(4) 启动ifcfg-eth0:0
+	ifup ifcfg-eth0:0
+(5) yum install ipvsadm
+(6) 关闭网卡的广播功能 vim /etc/sysctl.conf    (这里是做什么用的？)
+	net.ipv4.conf.all.send_redirects = 0
+	net.ipv4.conf.default.send_redirects = 0
+	net.ipv4.conf.eth0.send-redirects = 0
+(7) sysctl -p
+(8) 添加集群
+	ipvsadm -A -t 10.10.10.100:80 -s rr
+(9) 添加集群中的服务器
+    ipvsadm -a -t 10.10.10.100:80 -r  10.10.10.13:80 -g
+(10) 保存已经添加的集群
+	 service ipvsadm  save
+(11) ipvsadm -nL  查看是否添加成功
+```
+
+#### 2、服务器上要做的事情(每台都类似只有`IP`不同)
+
+```
+
+(1) 关闭网卡守护进程,每一台实验机器都要关闭，无论是真实服务器还是负载均衡器
+	service NetworkManager stop && chkconfig NetworkManager off
+(2) chkconfig httpd on
+(3) echo "this is server 1" >> /var/www/html/index.html
+(4) curl localhost 检查是否网站运行正常
+(5) cd /etc/sysconfig/network-scripts
+	cp -a ifconfig-lo  ifconfig-lo:0
+(6) vi ifconfig-lo:0
+    改设备名称
+    IP地址改成静态的10.10.10.100
+    ifup lo:0
+(7) 关闭arp通信行为
+	net.ipv4.conf.all.arp_ignore=1
+	net.ipv4.conf.all.arp_announce=2
+	
+	net.ipv4.conf.default.arp_ignore=1
+	net.ipv4.conf.default.arp_announce=2
+	
+	net.ipv4.conf.lo.arp_ignore=1
+	net.ipv4.conf.lo.arp_announce=2
+	
+	因为修改了内核参数所以要使用sysctl -p使其生效
+	
+(8) 
+	route add -host 10.10.10.100 ev lo:0
+	route -n 查看添加是否生效
+	echo "route add -host 10.10.10.100 ev lo:0" >> /etc/rc.local  防止重启之后失效
+	
+到此完成1和2两大步，那么测试一下LVS-DR模式是否工作正常。如果工作正常，那么我们接下来开始继续实验Keepalived，我们回
+到主LVS上，安装Keepalived。
+```
+
+#### 3、安装`Keepalived`  (主`LVS`节点)
+
+```shell
+3、安装Keepalived  (主LVS节点)
+搞一个Keepalived安装包，实验中使用的是keepalived-1.2.2.tar.gz 因为使用源代码安装，所以要安装gcc 和 gcc-c++
+(1) 安装gcc和gcc-c++
+(2) 解压keepalived安装包
+(3) 安装相关的keepalived的安装依赖
+(4) yum -y install kernel-devel openssl-devel popt-devel gcc*
+(5) 使用./configure生成makefile文件了
+./configure --prefix=/ --with-kernel-dir=/usr/src/kernels/2.6.32...../     (这里要注意自己的机器的目录可能不是2.6.32)
+	如果出不来/kernels/2.6.32...../ 这个目录，那么重新安装kernel-devel.x86_64 0:2.6.32-642.el6这个文件
+
+(6) make && make install
+	编译 && 编译安装
+(7) 接着我们拷贝启动脚本
+	ls -l /etc/init.d/keepalived
+	chkconfig --add keepalived 添加keepalived的启动管理
+	chkconfig keepalived on    设置为开机自动启动
+(8) 修改Keepalived配置文件
+	vim /etc/keepalived/keepalived.conf
+(9) service keepalived start
+(10) cat /var/log/messages
+	可以看到Keepalived的监控信息日志已经打印到了这个文件中
+
+```
+
+#### 4、主节点的`Keepalived`配置
+
+```
+[root@localhost ~]# vim /etc/keepalived/keepalived.conf
+#全局定义块：对整个 Keepalive 配置生效的，不管是否使用 LVS；
+global_defs {					#全局配置
+	#notification_email {		#指定keepalived在发生切换时需要发送email到的对象，一行一个
+	#	acassen@firewall.loc	#指定收件人邮箱
+    #	failover@firewall.loc
+	#	sysadmin@firewall.loc
+	#}
+	#notification_email_from Alexandre.Cassen@firewall.loc #指定发件人
+	#smtp_server 192.168.200.1	#指定smtp服务器地址
+	#smtp_connect_timeout 30		#指定smtp连接超时时间
+    #上面这些是邮件配置，一般来说我们不会使用这么low的监控服务，我们后期会构建监控服务，对keepalived的可用性进行检测
+	router_id R1			#此处注意router_id为负载均衡标识，在局域网内应该是唯一的。也就是我当前机器的名称，同一个组里面机器的名称不能一样，准备节点不一样
+}
+ 
+vrrp_instance inside_network {
+	state MASTER 			#指定那个为master，那个为backup，如果设置了nopreempt这个值不起作用，主备依靠priority决定
+	interface eth0 			#设置实例绑定的网卡，指定通过哪个网卡进行心跳检测
+	virtual_router_id 66	#VPID标记，虚拟的组，只有在同一个组里面才是同一个高可用环境，所以主备节点他们的virtual_router_id值应该是一样的。
+	priority 80				#优先级，权重，高优先级竞选为master，主和重之间的差距最好是50，那么切换更加的顺畅一点
+	advert_int 1			#检查间隔，默认1秒
+	authentication {		#设置认证
+		auth_type PASS		#认证方式，类型主要有PASS、AH 两种
+		auth_pass 111	    #认证密码
+	}
+	virtual_ipaddress {		#设置vip，也就是整个集群的IP地址
+		10.10.10.100
+	}
+}
+
+virtual_server 10.10.10.100 80 { #集群所使用的VIP和端口
+    delay_loop 2					#健康检查间隔，单位为秒
+    lb_algo rr						#lvs调度算法rr|wrr|lc|wlc|lblc|sh|dh
+    lb_kind DR						#负载均衡转发规则。一般包括DR,NAT,TUN 3种
+    protocol TCP					#转发协议，有TCP和UDP两种，一般用TCP，没用过UDP
+ 
+    real_server 10.10.10.13 80 { #真实服务器，包括IP和端口号
+        weight 1					#默认为1,0为失效        
+		TCP_CHECK {					#通过tcpcheck判断RealServer的健康状态
+            connect_port 80         健康检查的端口的端口
+            connect_timeout 3		#连接超时时间
+            nb_get_retry 3			#重连次数
+            delay_before_retry 4	#重连间隔时间
+        }
+    }
+
+    real_server 10.10.10.14 80 { #真实服务器，包括IP和端口号
+        weight 1                    #默认为1,0为失效        
+        TCP_CHECK {                 #通过tcpcheck判断RealServer的健康状态
+            connect_port 80         健康检查的端口的端口
+            connect_timeout 3       #连接超时时间
+            nb_get_retry 3          #重连次数
+            delay_before_retry 4    #重连间隔时间
+        }
+    }
+}
+```
+
+#### 5、安装`Keepalived`  (备份`LVS`节点)
+
+![]()
+
+```
+(1) cd /etc/sysconfig/network-scripts
+    cp -a ifconfig-eth0  ifconfig-eth0:0
+	vi ifcfig-eth0:0
+	设备名改成eth0:0
+	IP地址改成静态的10.10.10.100
+(2) 启动ifcfg-eth0:0
+	ifup ifcfg-eth0:0
+	这是会报错，说
+	Determining if ip address 10.10.10.100 is already in use for device eth0...
+	Error, some other host (00:0c:29:93:39:84) already uses address 10.10.10.100.
+(3) 为了解决上面的问题，那么我们打开ifup启动程序这个文件
+	一般在256行。不同的内核版本所在的行号不同，注释掉ifup中的响应代码，让这个网卡能正常的启动
+(4) 安装Keepalived
+搞一个Keepalived安装包，实验中使用的是keepalived-1.2.2.tar.gz 因为使用源代码安装，所以要安装gcc 和 gcc-c++
+(5) 安装gcc和gcc-c++
+(6) 解压keepalived安装包
+(7) 安装相关的keepalived的安装依赖
+(8) yum -y install kernel-devel openssl-devel popt-devel gcc*
+(9) 使用./configure生成makefile文件了
+./configure --prefix=/ --with-kernel-dir=/usr/src/kernels/2.6.32...../     (这里要注意自己的机器的目录可能不是2.6.32)
+	如果出不来/kernels/2.6.32...../ 这个目录，那么重新安装kernel-devel.x86_64 0:2.6.32-642.el6这个文件
+(10) make && make install
+	编译 && 编译安装
+(11) 接着我们拷贝启动脚本
+	ls -l /etc/init.d/keepalived
+	chkconfig --add keepalived 添加keepalived的启动管理
+	chkconfig keepalived on    设置为开机自动启动
+(12) 修改Keepalived配置文件
+ 	vim /etc/keepalived/keepalived.conf
+(13) service ipvsadm start
+(14) chkconfig ipvsadm on
+(15) service keepalived start
+(16) 关闭网卡的广播功能 vim /etc/sysctl.conf    (这里是做什么用的？)
+	net.ipv4.conf.all.send_redirects = 0
+	net.ipv4.conf.default.send_redirects = 0
+	net.ipv4.conf.eth0.send-redirects = 0
+	sysctl -p
+(17) ipvsadm -Ln
+	 我们使用这个命令刷新的时候，就能看到集群信息，但是其实我们还没有在备LVS节点配置这些，那么为什么会有这些信息那
+因为我们在配置Keepalived的时候，已经在配置文件中添加了这信息，而Keepalived里面有集成的LVS的模块。所以就可以把这些信息添加到环境中。
+```
+
+#### 6、备`LVS`的`Keepalived`配置
+
+```
+[root@localhost ~]# vim /etc/keepalived/keepalived.conf
+#全局定义块：对整个 Keepalive 配置生效的，不管是否使用 LVS；
+global_defs {					#全局配置
+	#notification_email {		#指定keepalived在发生切换时需要发送email到的对象，一行一个
+	#	acassen@firewall.loc	#指定收件人邮箱
+    #	failover@firewall.loc
+	#	sysadmin@firewall.loc
+	#}
+	#notification_email_from Alexandre.Cassen@firewall.loc #指定发件人
+	#smtp_server 192.168.200.1	#指定smtp服务器地址
+	#smtp_connect_timeout 30		#指定smtp连接超时时间
+    #上面这些是邮件配置，一般来说我们不会使用这么low的监控服务，我们后期会构建监控服务，对keepalived的可用性进行检测
+	router_id R2			#此处注意router_id为负载均衡标识，在局域网内应该是唯一的。也就是我当前机器的名称，同一个组里面机器的名称不能一样，准备节点不一样
+}
+ 
+vrrp_instance inside_network {
+	state SLAVE 			#指定那个为master，那个为backup，如果设置了nopreempt这个值不起作用，主备依靠priority决定
+	interface eth0 			#设置实例绑定的网卡，指定通过哪个网卡进行心跳检测
+	virtual_router_id 66	#VPID标记，虚拟的组，只有在同一个组里面才是同一个高可用环境，所以主备节点他们的virtual_router_id值应该是一样的。
+	priority 20				#优先级，权重，高优先级竞选为master，主和重之间的差距最好是50，那么切换更加的顺畅一点
+	advert_int 1			#检查间隔，默认1秒
+	authentication {		#设置认证
+		auth_type PASS		#认证方式，类型主要有PASS、AH 两种
+		auth_pass 111	    #认证密码
+	}
+	virtual_ipaddress {		#设置vip，也就是整个集群的IP地址
+		10.10.10.100
+	}
+}
+
+virtual_server 10.10.10.100 80 { #集群所使用的VIP和端口
+    delay_loop 2					#健康检查间隔，单位为秒
+    lb_algo rr						#lvs调度算法rr|wrr|lc|wlc|lblc|sh|dh
+    lb_kind DR						#负载均衡转发规则。一般包括DR,NAT,TUN 3种
+    protocol TCP					#转发协议，有TCP和UDP两种，一般用TCP，没用过UDP
+ 
+    real_server 10.10.10.13 80 { #真实服务器，包括IP和端口号
+        weight 1					#默认为1,0为失效        
+		TCP_CHECK {					#通过tcpcheck判断RealServer的健康状态
+            connect_port 80         健康检查的端口的端口
+            connect_timeout 3		#连接超时时间
+            nb_get_retry 3			#重连次数
+            delay_before_retry 4	#重连间隔时间
+        }
+    }
+
+    real_server 10.10.10.14 80 { #真实服务器，包括IP和端口号
+        weight 1                    #默认为1,0为失效        
+        TCP_CHECK {                 #通过tcpcheck判断RealServer的健康状态
+            connect_port 80         健康检查的端口的端口
+            connect_timeout 3       #连接超时时间
+            nb_get_retry 3          #重连次数
+            delay_before_retry 4    #重连间隔时间
+        }
+    }
+}
+
+```
+
+#### 7、测试`Keepalived`能实现`LVS`主备高可用
+
+&emsp;要想模拟`LVS`挂掉了，因为`LVS`就是内核。所以要把整个内核搞挂了不容易。所以采用的模拟方法就是断网，把网卡停了。然后
+
+去观察网站还能否使用了，如果能使用了就说明我们的`Keepalived`使用还是好使的。
+
+#### 8、测试`Keepalived`能检测后端服务器工作正常
+
+​	停掉服务器，然后使用`ipvsadm -nL`查看服务器是否从列表中清除掉。
+
+​	重新开启服务器，然后使用`ipvsadm -nL`查看服务器是否从列表中添加。
+
+## 5.3 Heartbeat-Nginx
+
+![sgg-heartbeat01]()
+
+`Heartbeat`使用一组脚本的方式进行检测和切换。所以原理不像`Keepalived`那么复杂。
+
+### 5.3.1实验
+
+#### 1、安装`nginx`
+
+```
+
+(0) 搞一个nginx的源代码安装包解压
+(1) yum -y install pcre pcre-devel zlib zlib-devel     (nginx的依赖)
+(2) useradd -s /sbin/nologin -M nginx
+(3)	cd nginx-1.2.6
+	./configure --prefix=/usr/local/nginx --user=nginx --group=nginx
+(4) make && make install
+(5) cd /usr/local/nginx
+	rm -fr *.html
+(6) vi index.html
+(7) 启动nginx
+```
+
+#### 2、安装`heartbeat.tar.gz`
+
+```
+(1) tar -zxvf heartbeat.tar.gz
+(2) cd heartbeat
+(3) yum -y install *
+```
+
+#### 3、时间同步
+
+对于所有的主备，这种集群的这种同步的，时间同步都非常的重要，必须要有。
+
+```
+在10.10.10.11上进行配置：
+(1) yum -y install ntp
+(2) vim /etc/ntp.conf
+(3) 
+    restrict 10.10.10.0  mask 255.255.255.0 nomodify notrap
+    server 127.127.1.0
+    fudge 127.127.1.0 stratum 10
+(4) service ntpd start
+(5) chkconfig ntpd on
+```
+
+```
+在10.10.10.12上进行配置：
+(1) yum -y install ntpdate
+(2) ntpdate -u 10.10.10.11
+```
+
+#### 5、配置主机域名解析
+
+&emsp;一定要配置主机域名解析，因为它是使用`uname -n`来进行进行检测的，这个检测的值要和你的配置文件中配置的值是一样的，
+
+并且能够被解析才行。
+
+```
+在10.10.10.11上进行配置：
+(1) hostname www.centos1.com
+(2) vi /etc/sysconfig/network  看是否生效
+(3) 构建DNS
+	vi /etc/hosts
+	10.10.10.11 www.centos1.com
+	10.10.10.12 www.centos2.com
+```
+
+```
+在10.10.10.12上进行配置：
+(1) hostname www.centos2.com
+(2) vi /etc/sysconfig/network  看是否生效
+(3) 构建DNS
+	vi /etc/hosts
+	10.10.10.11 www.centos1.com
+	10.10.10.12 www.centos2.com
+```
+
+#### 6、拷贝配置文件
+
+上面我安装完成了`heartbeat`和初始环境。然后我要去拷贝配置文件了。
+
+```
+在10.10.10.11上进行拷贝配置文件：
+cd /usr/share/doc/heartbeat-3.0.4/
+cp ha.cf authkeys haresources /etc/ha.d
+其中：
+ha.cf 主配置文件
+authkeys 认证文件    
+haresources 源文件
+```
+
+#### 7、修改认证文件
+
+认证服务，节点之间的认证配置，修改`/etc/ha.d/authkeys`，在主上修改
+
+```
+dd if=/dev/random bs=512 count=1 | openssl md5  #生成秘钥随机数
+vim authkeys
+	auth 3
+	1 crc
+	2 sha1 HT!
+	3 md5 54d306dd3d5e0f87ce4266d1dd64
+chmod 600 authkeys
+```
+
+#### 8、修改主配置文件
+
+```
+bcast eth0
+node www.centos1.com
+node www.centos2.com
+```
+
+![sgg-heartbeat02]()
+
+#### 9、修改源配置文件
+
+```
+www.centos1.com IPadder::10.10.10.100/24/eth0:0 （配置文件中添加）
+等同于
+ifconfig eth0:0 10.10.10.100 netmask 255.255.255.0
+```
+
+#### 10、重节点进行拷贝上面的三个配置文件
+
+#### 11、开始试验
+
+```
+(1) 一直ping  10.10.10.100这个浮动，当切换的时候，我们会发现ping不通
+(2) 模拟一个节点挂了，就是断掉网卡
+(3) /etc/init.d/heartbeat status  查看heartbeat的运行状态、
+(4) /etc/init.d/heartbeat restart 重新启动heartbeat
+```
+
+&emsp;`Heartbeat`也能完成切换的功能，但是从原理角度考虑，还是`Keepalived`和`VRRP`协议更加好一些，因为协议非常成熟。
+
+`Heartbeat`的`V2`版本资源控制器的东西，用来进行资源的监控和对应的服务的启用。但是在`V3`的时候被剥离出去了。所以如果是
+
+网断了，`Heartbeat`关闭了，服务器宕机了，都可以进行我们的服务的切换。但是比如如果`nginx`被`pkill nginx`了，会发现服
+
+务没有进行自动的切换。**`Heartbeat`检测是的网络的通信能力，而不是我服务是否存活**。这个非常重要。比如我的`LVS`挂了，那
+
+么挂的就是内核，但是我的`nginx`是在用户空间的。所以我们为了让`nginx`退出的情况下，也能够马上的进行切换。
+
+```
+#!/bin/bash
+PWD=/usr/local/script/jiankong
+URL="http://10.10.10.11/index.html"
+HTTP_CODE=`curl -o /dev/null -s -w "%{http_code}" "${URL}"` 
+if [ $HTTP_CODE != 200 ]
+    then
+	service heartbeat stop
+fi
+```
+
+我们把这个脚本添加`crond`中。
+
+```
+>> crontab -e
+*/1 * * * *  bash /usr/local/script/80.sh
+
+>> service crontab restart 
+>> chkconfig crond on
+```
+
+那么这个时候就会一分钟定时执行这个任务，然后发现服务不可用了，那么就把`heartbeat`关闭了。这样就完成了切换。
+
+这样无论是服务私网，网络中断，系统崩溃都能完成切换。
+
+
+
+## 5.4 多级负载
+
+### 5.4.1 实现原理
+
+
+
+# 6、缓存和代理服务
+
+
+
+# 7、网络存储
+
+## 7.1、存储分类
+
+![ssg-网络存储01]()
+
+#### 7.1.1、网络拓扑
+
+`NAS` 
+
+`DAS`
+
+`SAN`
+
+#### 7.1.2、存储技术
+
+#### 7.1.3、网络拓扑+存储技术
 
 
 
 
 
-
-
-
-&emsp
+emsp;
 
 # 参考
 
