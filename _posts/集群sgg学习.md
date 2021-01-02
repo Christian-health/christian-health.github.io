@@ -304,7 +304,7 @@ HTTPS   安全   配置    花钱
 
 ```
 
-![sgg-LVS-调度算法06]()
+![sgg-LVS-调度算法07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%9507.jpg?raw=true)
 
 ## 问题1、上面的图如果后面的`apache`服务器挂了会发生什么？
 
