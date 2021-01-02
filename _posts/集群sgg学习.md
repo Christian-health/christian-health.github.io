@@ -408,13 +408,15 @@ done
 
 ## 5.2、`Keepalived原理`
 
-![]()
+![ssg-keeplived01.jpg](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-keeplived01.jpg?raw=true)
 
 `Keepalived`是专门为`LVS`做的健康状态检查的工具。
 
 &emsp;不光是服务器需要高可用，其实很多网络设备也是需要高可用的，比如交换机。所以很早就有解决交换机等网络设备的高可用方
 
 案，就是`VRRP`。而`Keepalived`就是使用已经成熟的`VRRP`协议。
+
+![ssg-keeplived02.jpg](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-keeplived02.jpg?raw=true)
 
 &emsp;前面我们演示过`LVS`是不支持，后端服务器健康监测的，那么所以写了一个`shell`脚本用来进行健康状态监测。但是
 
@@ -581,7 +583,7 @@ virtual_server 10.10.10.100 80 { #集群所使用的VIP和端口
 
 #### 5、安装`Keepalived`  (备份`LVS`节点)
 
-![]()
+![ssg-keeplived03.jpg](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-keeplived03.jpg?raw=true)
 
 ```
 (1) cd /etc/sysconfig/network-scripts
