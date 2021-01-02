@@ -174,13 +174,13 @@
 
 ### 2.3.3、`LVS-TUN`工作模式
 
-![ssg-lvs-tun工作模式01]()
+![ssg-lvs-tun工作模式01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-tun%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F01.jpg?raw=true)
 
-![ssg-lvs-tun工作模式02]()
+![ssg-lvs-tun工作模式02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-tun%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F02.jpg?raw=true)
 
-![ssg-lvs-tun工作模式03]()
+![ssg-lvs-tun工作模式03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-tun%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F03.jpg?raw=true)
 
-![ssg-lvs-tun工作模式04]()
+![ssg-lvs-tun工作模式04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-lvs-tun%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F04.jpg?raw=true)
 
 # 3、负载均衡集群实验
 
@@ -220,7 +220,7 @@ http 链接，分成两类：
 在lvs调度算法中，会理解为活动链接的资源消耗是非活动链接的256倍
 ```
 
-![sgg-LVS-调度算法01]()
+![sgg-LVS-调度算法01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%9501.jpg?raw=true)
 
 ```
 WLC
@@ -229,9 +229,9 @@ WLC
 最开始到达的请求数都是0，那么当一个请求来的时候，根据WLC算法会把这个请求发送给第一台服务器，但是根据上面，我们可以看到其实是第二台服务器更好，因为他的权重是2。所以引入了SED算法
 ```
 
-![sgg-LVS-调度算法02]()
+![sgg-LVS-调度算法02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%9502.jpg?raw=true)
 
-![sgg-LVS-调度算法03]()
+![sgg-LVS-调度算法03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%9503.jpg?raw=true)
 
 &emsp;前面我们使用`DH`算法，如果请求`1.jpeg`这个文件特别的多，那么就会对第一个`SQUID`造成非常大的压力，所以就有了`LBLV`算
 
@@ -250,7 +250,7 @@ HTTPS   安全   配置    花钱
 
 &emsp;为什么要有`LVS`持久连接？
 
-![sgg-LVS-调度算法04]()
+![sgg-LVS-调度算法04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%9504.jpg?raw=true)
 
 &emsp;比如，如上图，当客户端发送一个请求到`LVS`，那么`LVS`把这个请求发送给了第一个`APACHE`，这个当然要建立一个`HTTPS`连
 
@@ -270,9 +270,9 @@ HTTPS   安全   配置    花钱
 
 时间，加上`30S`，直到这个时间减为`0`。记住两点：（1）优先级高于通用算法（2）类似于`SH`算法（3）应用于`HTTPS`场景。
 
-![sgg-LVS-调度算法05]()
+![sgg-LVS-调度算法05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%9505.jpg?raw=true)
 
-![sgg-LVS-调度算法06]()
+![sgg-LVS-调度算法06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%9506.jpg?raw=true)
 
 ```
 集群不先进行处理，而是先打上一个标记，然后根据标记进行处理。这样会更加的灵活，这个要和iptables一起使用。
