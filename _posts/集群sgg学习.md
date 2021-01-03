@@ -716,7 +716,7 @@ virtual_server 10.10.10.100 80 { #集群所使用的VIP和端口
 
 (0) 搞一个nginx的源代码安装包解压
 (1) yum -y install pcre pcre-devel zlib zlib-devel     (nginx的依赖)
-(2) useradd -s /sbin/nologin -M nginx
+(2) useradd -s /sbin/nologin -M nginx  (-M 参数啥意思？)
 (3)	cd nginx-1.2.6
 	./configure --prefix=/usr/local/nginx --user=nginx --group=nginx
 (4) make && make install
@@ -879,6 +879,128 @@ fi
 ## 5.4 多级负载
 
 ### 5.4.1 实现原理
+
+七层负载原理：`Nginx`有识别主机名和`FQDN`的功能，判断后面的三台`apache`的主机名称是谁？或者实现按照域名的方式实现负载均衡。
+
+![sgg-多级负载-七层负载原理]()
+
+四层负载
+
+![sgg-多级负载-四层负载原理]()
+
+&emsp;如果我要负载均衡能力大的，那么就使用四层负载均衡。如果想要识别域名的，那么就要使用七层负载均衡。所以我现在有这样的一个需求。
+
+```
+公司有两个不同域名的门户网站
+业务高峰期访问量较大，经测试Nginx未能满足并发压力
+两个门户网站公网地址一致
+现在要做负载均衡，如何完成？
+```
+
+![sgg-多级负载-四七层负载原理]()
+
+### 5.4.2 实验
+
+![sgg-多级负载-实验]()
+
+#### 5.4.2.1 真实`RealServer`的安装
+
+和前面的安装过程是一样的，注意这里`RealServer`上没有安装`LVS`相关的任何东西，因为是使用`LVS`负载均衡到`Nginx`
+
+所以要在两台`Nginx`上和一台`LVS`上配置`IPVS`相关。
+
+#### 5.4.2.2 真实`Nginx`的安装和配置
+
+```nginx
+（1）10.10.10.13  (注意IP)
+upstream sina.com {
+	server 10.10.10.14:80
+	server 10.10.10.15:80
+}
+upstream sina.cn {
+	server 10.10.10.16:80
+}
+server {
+	listen 80;
+	server_name www.sina.com;
+	location / {
+		proxy_pass http://sina.com;
+	}
+}
+server {
+	listen 80;
+	server_name www.sina.cn;
+	location / {
+		proxy_pass http://sina.cn;
+	}
+}
+```
+
+#### 5.4.2.3  编辑windows的host域名文件测试13好使
+
+```
+10.10.10.13   www.shangguigu.com
+10.10.10.13   www.shangguigu.cn
+```
+
+这个时候访问上面的两个网站都可以了。
+
+#### 5.4.2.4 真实`Nginx`的安装和配置
+
+```
+（1）10.10.10.12 (注意IP)
+upstream sina.com {
+	server 10.10.10.14:80
+	server 10.10.10.15:80
+}
+upstream sina.cn {
+	server 10.10.10.16:80
+}
+server {
+	listen 80;
+	server_name www.sina.com;
+	location / {
+		proxy_pass http://sina.com;
+	}
+}
+server {
+	listen 80;
+	server_name www.sina.cn;
+	location / {
+		proxy_pass http://sina.cn;
+	}
+}
+```
+
+#### 5.4.2.5  编辑windows的host域名文件测试12好使
+
+```
+10.10.10.12   www.shangguigu.com
+10.10.10.12   www.shangguigu.cn
+```
+
+这个时候访问上面的两个网站都可以了。
+
+#### 5.4.2.6  `LVS`和`Nginx`之间的配置
+
+&emsp;负载调度器有一个后端健康监测的要求。对于`Nginx`来说，`Nginx`自动支持健康状态检测。所以`RealServer`如果挂了，那么
+
+`Nginx`能自动进行处理，不至于挂了。但是`LVS`没有后端服务器的健康监测，图上`LVS`的后端是谁？是`Nginx`所以要在两台`Nginx`
+
+和`LVS`上进行健康检测。所以要使用`Keepalived`。所以在`10.10.10.11`和`10.10.10.12`和`10.10.10.13`上，进行`LVS`的`DR`模式
+
+的配置。
+
+#### 5.4.2.7 编辑windows的host域名文件
+
+```
+10.10.10.100   www.shangguigu.com
+10.10.10.100  www.shangguigu.cn
+```
+
+这样最终访问不同的域名就可以通过先经过`LVS`调度，然后再经过`Nginx`的调度，完成四层加上七层的负载均衡。
+
+
 
 
 
