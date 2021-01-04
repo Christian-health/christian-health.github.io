@@ -1186,27 +1186,29 @@ raw ---->  mangle ----> nat ----> filter
 
 **这里四讲没有看，后补**
 
-![ssg-iptables-语法规则01]()
+![ssg-iptables-语法规则01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9901.jpg?raw=true)
 
-![ssg-iptables-语法规则02]()
+![ssg-iptables-语法规则02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9902.jpg?raw=true)
 
-![ssg-iptables-语法规则03]()
+![ssg-iptables-语法规则03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9903.jpg?raw=true)
 
-![ssg-iptables-语法规则04]()
+![ssg-iptables-语法规则04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9904.jpg?raw=true)
 
-![ssg-iptables-语法规则05]()
+![ssg-iptables-语法规则05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9905.jpg?raw=true)
 
-![ssg-iptables-语法规则06]()
+![ssg-iptables-语法规则06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9906.jpg?raw=true)
 
-![ssg-iptables-语法规则07]()
+![ssg-iptables-语法规则07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9907.jpg?raw=true)
 
-![ssg-iptables-语法规则08]()
+![ssg-iptables-语法规则08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9908.jpg?raw=true)
 
-![ssg-iptables-语法规则09]()
+![ssg-iptables-语法规则09](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9909.jpg?raw=true)
 
-![ssg-iptables-语法规则10]()
+![ssg-iptables-语法规则10](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9910.jpg?raw=true)
 
-![ssg-iptables-语法规则11]()
+
+
+![ssg-iptables-语法规则11](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9911.jpg?raw=true)
 
 &emsp;什么时候使用`REJECT`，什么时候用`DROP`。比如我的网站今天要维护，不能让外部访问，这个时候就可以在`iptables`中，添加规则的时候，使用`REJECT`这样当用户使用`curl`命令访问的时候，就直接会受到响应，说你无法访问这个网站。但是如果使用`DROP`的时候就不会受到任何的响应知道连接超时。什么时候使用`DROP`，比如一个请求要访问我的`3306`端口，那么你只能访问我的网站，你不能访问数据库，访问数据库是非法的，那么这个时候，我收到你的包的时候，我就直接`DROP`掉，也不会给你回信息。因为回信息没有意义，我不能告诉你不能访问数据库。而且给你发消息也会消耗我的资源，所以我就不搭理你。
 
