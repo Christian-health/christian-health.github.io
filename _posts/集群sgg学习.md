@@ -1146,21 +1146,21 @@ server {
 
 &emsp;防火墙规则就是写在链上的。
 
-![sgg-防火墙01]()
+![sgg-防火墙01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9901.jpg?raw=true)
 
-![sgg-防火墙02]()
+![sgg-防火墙02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9902.jpg?raw=true)
 
-![sgg-防火墙03]()
+![sgg-防火墙03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9903.jpg?raw=true)
 
-![sgg-防火墙04]()
+![sgg-防火墙04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9904.jpg?raw=true)
 
-![sgg-防火墙05]()
+![sgg-防火墙05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9905.jpg?raw=true)
 
-![sgg-防火墙06]()
+![sgg-防火墙06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9906.jpg?raw=true)
 
-![sgg-防火墙07]()
+![sgg-防火墙07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9907.jpg?raw=true)
 
-![sgg-防火墙08]()
+![sgg-防火墙08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9908.jpg?raw=true)
 
 ### 9.3.4 防火墙顺序
 
@@ -1170,11 +1170,11 @@ server {
 raw ---->  mangle ----> nat ----> filter
 ```
 
-![sgg-防火墙顺序01]()
+![sgg-防火墙顺序01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F01.jpg?raw=true)
 
-![sgg-防火墙顺序02]()
+![sgg-防火墙顺序02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F02.jpg?raw=true)
 
-![sgg-防火墙顺序03]()
+![sgg-防火墙顺序03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F03.jpg?raw=true)
 
 &emsp;注意上图的圈标记，当`圈1`网络到`圈2`这个主机的时候，要经过`圈3`和`圈4`。这里要注意，`圈3`，`圈4`，`圈5`，`圈6`，`圈7`等等，
 
@@ -1191,13 +1191,13 @@ raw ---->  mangle ----> nat ----> filter
 
 非常非常安全，但是配置非常麻烦。所以使用的不多。
 
-![ssg-selinux01]()
+![ssg-selinux01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux01.jpg?raw=true)
 
-![ssg-selinux02]()
+![ssg-selinux02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux02.jpg?raw=true)
 
 上图上面的几个概念都要研究一下。
 
-![ssg-selinux03]()
+![ssg-selinux03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux03.jpg?raw=true)
 
 传统操作系统下是**任意访问控制**，比如主体是进程，客体是文件，只要能满足`rwx`就能进行操作。但是`selinux`不行，`selinux`
 
@@ -1209,17 +1209,17 @@ raw ---->  mangle ----> nat ----> filter
 
 可验证：留下日志数据，记录
 
-![ssg-selinux04]()
+![ssg-selinux04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux04.jpg?raw=true)
 
 类型强制访问控制：
 
-![ssg-selinux05]()
+![ssg-selinux05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux05.jpg?raw=true)
 
-![ssg-selinux06]()
+![ssg-selinux06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux06.jpg?raw=true)
 
 多类型强制访问控制：
 
-![ssg-selinux07]()
+![ssg-selinux07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux07.jpg?raw=true)
 
 ### 9.4.2 安全上下文
 
