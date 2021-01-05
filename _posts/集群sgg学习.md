@@ -1232,7 +1232,7 @@ raw ---->  mangle ----> nat ----> filter
 ![ssg-iptables-语法规则23](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9923.jpg?raw=true)
 ![ssg-iptables-语法规则24](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9924.jpg?raw=true)
 ![ssg-iptables-语法规则25](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9925.jpg?raw=true)
-![ssg-iptables-语法规则26](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9926.jpg?raw=true)
+![ssg-iptables-语法规则26](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9926.jpg?raw=true) 
 
 ## 9.4、`Selinux`
 ### 9.4.1 `Selinux`前世今生
