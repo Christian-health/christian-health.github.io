@@ -1146,21 +1146,21 @@ server {
 
 &emsp;防火墙规则就是写在链上的。
 
-![sgg-防火墙01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9901.jpg?raw=true)
+![sgg-防火墙01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9901.jpg?raw=true) 
 
-![sgg-防火墙02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9902.jpg?raw=true)
+![sgg-防火墙02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9902.jpg?raw=true) 
 
-![sgg-防火墙03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9903.jpg?raw=true)
+![sgg-防火墙03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9903.jpg?raw=true) 
 
-![sgg-防火墙04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9904.jpg?raw=true)
+![sgg-防火墙04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9904.jpg?raw=true) 
 
-![sgg-防火墙05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9905.jpg?raw=true)
+![sgg-防火墙05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9905.jpg?raw=true) 
 
-![sgg-防火墙06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9906.jpg?raw=true)
+![sgg-防火墙06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9906.jpg?raw=true) 
 
-![sgg-防火墙07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9907.jpg?raw=true)
+![sgg-防火墙07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9907.jpg?raw=true) 
 
-![sgg-防火墙08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9908.jpg?raw=true)
+![sgg-防火墙08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%9908.jpg?raw=true) 
 
 ### 9.3.4 防火墙顺序
 
@@ -1170,11 +1170,11 @@ server {
 raw ---->  mangle ----> nat ----> filter
 ```
 
-![sgg-防火墙顺序01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F01.jpg?raw=true)
+![sgg-防火墙顺序01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F01.jpg?raw=true) 
 
-![sgg-防火墙顺序02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F02.jpg?raw=true)
+![sgg-防火墙顺序02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F02.jpg?raw=true) 
 
-![sgg-防火墙顺序03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F03.jpg?raw=true)
+![sgg-防火墙顺序03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E9%98%B2%E7%81%AB%E5%A2%99%E9%A1%BA%E5%BA%8F03.jpg?raw=true) 
 
 &emsp;注意上图的圈标记，当`圈1`网络到`圈2`这个主机的时候，要经过`圈3`和`圈4`。这里要注意，`圈3`，`圈4`，`圈5`，`圈6`，`圈7`等等，
 
@@ -1184,52 +1184,64 @@ raw ---->  mangle ----> nat ----> filter
 
 ### 9.3.5 `iptables`语法规则
 
-**这里四讲没有看，后补**
 
-![ssg-iptables-语法规则01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9901.jpg?raw=true)
 
-![ssg-iptables-语法规则02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9902.jpg?raw=true)
+![ssg-iptables-语法规则01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9901.jpg?raw=true) 
 
-![ssg-iptables-语法规则03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9903.jpg?raw=true)
+![ssg-iptables-语法规则02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9902.jpg?raw=true) 
 
-![ssg-iptables-语法规则04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9904.jpg?raw=true)
+![ssg-iptables-语法规则03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9903.jpg?raw=true) 
 
-![ssg-iptables-语法规则05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9905.jpg?raw=true)
+![ssg-iptables-语法规则04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9904.jpg?raw=true) 
 
-![ssg-iptables-语法规则06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9906.jpg?raw=true)
+![ssg-iptables-语法规则05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9905.jpg?raw=true) 
 
-![ssg-iptables-语法规则07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9907.jpg?raw=true)
+![ssg-iptables-语法规则06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9906.jpg?raw=true)  
 
-![ssg-iptables-语法规则08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9908.jpg?raw=true)
+![ssg-iptables-语法规则07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9907.jpg?raw=true) 
 
-![ssg-iptables-语法规则09](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9909.jpg?raw=true)
+![ssg-iptables-语法规则08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9908.jpg?raw=true) 
+
+![ssg-iptables-语法规则09](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9909.jpg?raw=true) 
 
 ![ssg-iptables-语法规则10](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9910.jpg?raw=true)
 
 
 
-![ssg-iptables-语法规则11](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9911.jpg?raw=true)
+![ssg-iptables-语法规则11](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9911.jpg?raw=true) 
 
 &emsp;什么时候使用`REJECT`，什么时候用`DROP`。比如我的网站今天要维护，不能让外部访问，这个时候就可以在`iptables`中，添加规则的时候，使用`REJECT`这样当用户使用`curl`命令访问的时候，就直接会受到响应，说你无法访问这个网站。但是如果使用`DROP`的时候就不会受到任何的响应知道连接超时。什么时候使用`DROP`，比如一个请求要访问我的`3306`端口，那么你只能访问我的网站，你不能访问数据库，访问数据库是非法的，那么这个时候，我收到你的包的时候，我就直接`DROP`掉，也不会给你回信息。因为回信息没有意义，我不能告诉你不能访问数据库。而且给你发消息也会消耗我的资源，所以我就不搭理你。
 
-![ssg-iptables-语法规则12](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9913.jpg?raw=true)
+![ssg-iptables-语法规则12](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9913.jpg?raw=true) 
 
-![ssg-iptables-语法规则13](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9913.jpg?raw=true)
+![ssg-iptables-语法规则13](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9913.jpg?raw=true) 
 
 ![ssg-iptables-语法规则14](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9914.jpg?raw=true)
 
-![ssg-iptables-语法规则15](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9915.jpg?raw=true)
+![ssg-iptables-语法规则15](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9915.jpg?raw=true) 
 
-![ssg-iptables-语法规则16](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9916.jpg?raw=true)
+![ssg-iptables-语法规则16](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9916.jpg?raw=true) 
+
+接下来要研究的是`DNAT `  和`SNAT`，关于`DNAT`和`SNAT`的实验需要自己做一次。不能光看别人做。
+![ssg-iptables-语法规则17](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9917.jpg?raw=true)  
+![ssg-iptables-语法规则18](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9918.jpg?raw=true) 
+![ssg-iptables-语法规则19](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9919.jpg?raw=true)
+![ssg-iptables-语法规则20](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9920.jpg?raw=true)
+![ssg-iptables-语法规则21](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9921.jpg?raw=true)
+![ssg-iptables-语法规则22](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9922.jpg?raw=true)
+![ssg-iptables-语法规则23](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9923.jpg?raw=true)
+![ssg-iptables-语法规则24](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9924.jpg?raw=true)
+![ssg-iptables-语法规则25](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9925.jpg?raw=true)
+![ssg-iptables-语法规则26](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9926.jpg?raw=true)
 
 ## 9.4、`Selinux`
 ### 9.4.1 `Selinux`前世今生
 
 非常非常安全，但是配置非常麻烦。所以使用的不多。
 
-![ssg-selinux01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux01.jpg?raw=true)
+![ssg-selinux01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux01.jpg?raw=true)  
 
-![ssg-selinux02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux02.jpg?raw=true)
+![ssg-selinux02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux02.jpg?raw=true)  
 
 上图上面的几个概念都要研究一下。
 
@@ -1251,11 +1263,11 @@ raw ---->  mangle ----> nat ----> filter
 
 ![ssg-selinux05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux05.jpg?raw=true)
 
-![ssg-selinux06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux06.jpg?raw=true)
+![ssg-selinux06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux06.jpg?raw=true) 
 
 多类型强制访问控制：
 
-![ssg-selinux07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux07.jpg?raw=true)
+![ssg-selinux07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-selinux07.jpg?raw=true) 
 
 ### 9.4.2 安全上下文
 
