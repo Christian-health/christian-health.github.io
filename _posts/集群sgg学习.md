@@ -882,11 +882,11 @@ fi
 
 七层负载原理：`Nginx`有识别主机名和`FQDN`的功能，判断后面的三台`apache`的主机名称是谁？或者实现按照域名的方式实现负载均衡。
 
-![sgg-多级负载-七层负载原理]()
+![sgg-多级负载-七层负载原理](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E5%A4%9A%E7%BA%A7%E8%B4%9F%E8%BD%BD-%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%8E%9F%E7%90%86.jpg?raw=true)
 
 四层负载
 
-![sgg-多级负载-四层负载原理]()
+![sgg-多级负载-四层负载原理](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E5%A4%9A%E7%BA%A7%E8%B4%9F%E8%BD%BD-%E5%9B%9B%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%8E%9F%E7%90%86.jpg?raw=true)
 
 &emsp;如果我要负载均衡能力大的，那么就使用四层负载均衡。如果想要识别域名的，那么就要使用七层负载均衡。所以我现在有这样的一个需求。
 
@@ -897,11 +897,11 @@ fi
 现在要做负载均衡，如何完成？
 ```
 
-![sgg-多级负载-四七层负载原理]()
+![sgg-多级负载-四七层负载原理](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E5%A4%9A%E7%BA%A7%E8%B4%9F%E8%BD%BD-%E5%9B%9B%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%8E%9F%E7%90%86.jpg?raw=true)
 
 ### 5.4.2 实验
 
-![sgg-多级负载-实验]()
+![sgg-多级负载-实验](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E5%A4%9A%E7%BA%A7%E8%B4%9F%E8%BD%BD-%E5%AE%9E%E9%AA%8C.jpg?raw=true)
 
 #### 5.4.2.1 真实`RealServer`的安装
 
