@@ -229,6 +229,8 @@ options bond0 miimon=100 mode=1 primary=eth0
 
 ### (8.1) Briged（桥接模式）
 
+
+
 ### (8.2) NAT（NAT模式）
 按照这个配置成功
 https://blog.51cto.com/13648313/2164309
@@ -239,6 +241,16 @@ https://blog.51cto.com/yangxiaowei/1955553
 https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-action.html
 
 这篇文章的所有参考文献都需要看。很重要。
+
+### (8.3) Host-Only（仅主机模式）
+
+#### 8.3.1 Host-Only模式访问互联网
+
+
+
+#### 8.3.2 Host-Only模式不访问互联网
+
+
 
 ## (9)如何实现端口映射
 
