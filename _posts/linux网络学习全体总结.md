@@ -227,6 +227,16 @@ options bond0 miimon=100 mode=1 primary=eth0
 
 ## (8) vm主机三种网络模式
 
+```
+VMnet0：这是VMware用于虚拟桥接网络下的虚拟交换机；
+VMnet1：这是VMware用于虚拟Host-Only网络下的虚拟交换机；
+VMnet8：这是VMware用于虚拟NAT网络下的虚拟交换机；
+VMware Network Adapter VMnet1：这是Host用于与Host-Only虚拟网络进行通信的虚拟网卡；
+VMware Network Adapter VMnet8：这是Host用于与NAT虚拟网络进行通信的虚拟网卡；
+```
+
+
+
 ### (8.1) Briged（桥接模式）
 
 ![vm-网络模式-桥接模式01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F01.jpg?raw=true)  
@@ -244,11 +254,23 @@ options bond0 miimon=100 mode=1 primary=eth0
 https://blog.51cto.com/13648313/2164309
 https://blog.51cto.com/yangxiaowei/1955553
 
-
-
 https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-action.html
 
 这篇文章的所有参考文献都需要看。很重要。
+
+![vm-网络模式-NAT01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT01.jpg?raw=true)   
+![vm-网络模式-NAT02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT02.jpg?raw=true)  
+![vm-网络模式-NAT03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT03.jpg?raw=true)  
+![vm-网络模式-NAT04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT04.jpg?raw=true)  
+![vm-网络模式-NAT05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT05.jpg?raw=true)  
+![vm-网络模式-NAT06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT06.jpg?raw=true)  
+![vm-网络模式-NAT07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT07.jpg?raw=true)  
+![vm-网络模式-NAT08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT08.jpg?raw=true)  
+![vm-网络模式-NAT09](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT09.jpg?raw=true)   
+![vm-网络模式-NAT10](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-NAT10.jpg?raw=true)  
+
+
+
 
 ### (8.3) Host-Only（仅主机模式）
 
