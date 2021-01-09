@@ -246,17 +246,33 @@ https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-ac
 
 #### 8.3.1 Host-Only模式访问互联网
 
+```
+问题描述
+在VMware Workstation中新建了一个虚拟机CentOS7，网络适配器选择的是“仅主机模式”，结果，物理机ping不通虚拟机，虚拟机也ping不通物理机。
+
+原因分析
+物理机ping不通虚拟机
+（1）虚拟机防火墙的原因，关闭防火墙即可
+
+虚拟机ping不通物理机
+（1）ping的地址不对，由于是“仅主机模式”，所以物理机和虚拟机通讯用的网络适配器是VMnet1，因此，ping的时候应该写VMnet1的地址，ping它才是ping宿主机
+
+（2）物理机防火墙的原因，关闭防火墙即可
+```
+
+
+
 ![vmware-hostonly-00](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-00.jpg?raw=true)
-![vmware-hostonly-01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-01.jpg?raw=true)   
-![vmware-hostonly-02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-02.jpg?raw=true)   
-![vmware-hostonly-03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-03.jpg?raw=true)    
-![vmware-hostonly-04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-04.jpg?raw=true)    
-![vmware-hostonly-05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-05.jpg?raw=true)   
-![vmware-hostonly-06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-06.jpg?raw=true)   
-![vmware-hostonly-07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-07.jpg?raw=true)    
-![vmware-hostonly-08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-08.jpg?raw=true)    
-![vmware-hostonly-09](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-09.jpg?raw=true)    
-![vmware-hostonly-10](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-10.jpg?raw=true)     
+![vmware-hostonly-01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-01.JPG?raw=true)   
+![vmware-hostonly-02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-02.JPG?raw=true)   
+![vmware-hostonly-03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-03.JPG?raw=true)    
+![vmware-hostonly-04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-04.JPG?raw=true)    
+![vmware-hostonly-05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-05.JPG?raw=true)   
+![vmware-hostonly-06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-06.JPG?raw=true)   
+![vmware-hostonly-07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-07.JPG?raw=true)    
+![vmware-hostonly-08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-08.JPG?raw=true)    
+![vmware-hostonly-09](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-09.JPG?raw=true)    
+![vmware-hostonly-10](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-10.JPG?raw=true)     
 
 
 
