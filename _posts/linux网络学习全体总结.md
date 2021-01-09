@@ -246,6 +246,18 @@ https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-ac
 
 #### 8.3.1 Host-Only模式访问互联网
 
+![vmware-hostonly-00](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-00.jpg?raw=true)
+![vmware-hostonly-01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-01.jpg?raw=true)
+![vmware-hostonly-02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-02.jpg?raw=true)
+![vmware-hostonly-03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-03.jpg?raw=true)
+![vmware-hostonly-04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-04.jpg?raw=true)
+![vmware-hostonly-05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-05.jpg?raw=true)
+![vmware-hostonly-06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-06.jpg?raw=true)
+![vmware-hostonly-07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-07.jpg?raw=true)
+![vmware-hostonly-08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-08.jpg?raw=true)
+![vmware-hostonly-09](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-09.jpg?raw=true)
+![vmware-hostonly-10](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-10.jpg?raw=true)
+
 
 
 #### 8.3.2 Host-Only模式不访问互联网
