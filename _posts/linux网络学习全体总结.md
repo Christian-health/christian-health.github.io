@@ -280,6 +280,9 @@ https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-ac
 
 #### 8.3.2 Host-Only模式不访问互联网
 
+![vmware-hostonly-noInternet-01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-noInternet-01.JPG?raw=true)   
+![vmware-hostonly-noInternet-02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-noInternet-02.JPG?raw=true)     
+![vmware-hostonly-noInternet-03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vmware-hostonly-noInternet-03.JPG?raw=true)     
 
 
 ## (9)如何实现端口映射
