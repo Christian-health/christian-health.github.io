@@ -229,6 +229,14 @@ options bond0 miimon=100 mode=1 primary=eth0
 
 ### (8.1) Briged（桥接模式）
 
+![vm-网络模式-桥接模式01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F01.jpg?raw=true)  
+![vm-网络模式-桥接模式02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F02.jpg?raw=true)   
+![vm-网络模式-桥接模式03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F03.jpg?raw=true)   
+![vm-网络模式-桥接模式04](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F04.jpg?raw=true)   
+![vm-网络模式-桥接模式05](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F05.jpg?raw=true)   
+![vm-网络模式-桥接模式06](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F06.jpg?raw=true)   
+![vm-网络模式-桥接模式07](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F07.jpg?raw=true)  
+![vm-网络模式-桥接模式08](https://github.com/Christian-health/christian-health.github.io/blob/master/img/vm-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F08.jpg?raw=true)  
 
 
 ### (8.2) NAT（NAT模式）
