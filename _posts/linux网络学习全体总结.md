@@ -317,6 +317,20 @@ https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-ac
 
 ## (9)如何实现端口映射
 
+待学习
+
+## (10)`Linux`主机开启转发功能
+
+如果想要NAT功能能够正常使用，需要开启Linux主机的核心转发功能。
+
+```shell
+echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+
+
+
+
+
 
 
 ## (100)参考文献
