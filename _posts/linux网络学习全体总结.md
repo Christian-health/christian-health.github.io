@@ -255,7 +255,9 @@ https://www.aneasystone.com/archives/2015/04/three-network-modes-of-vmware-in-ac
 （1）虚拟机防火墙的原因，关闭防火墙即可
 
 虚拟机ping不通物理机
-（1）ping的地址不对，由于是“仅主机模式”，所以物理机和虚拟机通讯用的网络适配器是VMnet1，因此，ping的时候应该写VMnet1的地址，ping它才是ping宿主机
+（1）ping的地址不对，由于是“仅主机模式”，所以物理机和虚拟机通讯用的网络适配器是VMnet1，因此，ping的时候应该写VMnet1的地址，ping它才是ping宿主机  
+
+****这个是重点，注意是ping VMware Network Adapter VMnet1这个虚拟网卡，而不是ping真正的物理机的IP
 
 （2）物理机防火墙的原因，关闭防火墙即可
 ```
