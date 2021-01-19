@@ -40,7 +40,7 @@
 
 &emsp;`Nginx`工作在应用层
 
-&emsp;`DNS`可以做到一个域名解析成多个`IP`，不同的`IP`可以解析到一个域名。
+**&emsp;`DNS`可以做到一个域名解析成多个`IP`，不同的`IP`可以解析到一个域名。**
 
 ## 2.2、负载均衡集群原理
 
@@ -48,11 +48,11 @@
 ​	![sgg-负载均衡集群原理01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%8601.jpg?raw=true)
 &emsp;`LVS`只是改动了一下`IP`地址，根本就没有读取报文的内容，所以这样的设计就能减轻很大的压力，提高性能。我只是进行了一
 
-些地址信息的更改，没有数据转发，没有涉及真实的流量转发和流量生产。这就是`LVS`的性能好的原因。
+些地址信息的更改，没有数据转发，**没有涉及真实的流量转发和流量生产**。这就是`LVS`的性能好的原因。
 
 &emsp;注意`LVS`这张图就好比。一个物流批发站，货物从西安到鹤岗经过这个物流批发站，但是**不会进入**物流批发站，只是在物流批发
 
-站的外面重新的贴了标签，确保货物能准确的送到，所以这整个过程是一个`TCP`连接。
+站的外面重新的贴了标签，确保货物能准确的送到，所以这**整个过程是一个`TCP`连接**。
 
 ### 2.2.2 、七层工作逻辑
 
@@ -60,7 +60,7 @@
 
 &emsp;注意`Nginx`这张图就好比。一个物流批发站，货物从西安到鹤岗经过这个物流批发站，**会进入**物流批发站，所以这就会对我们
 
-的物流站有很大的压力，所以左边客户到`Nginx`是一个`TCP`连接。而右边`Nginx`到真实服务器是另外的一个`TCP`连接。
+的物流站有很大的压力，所以**左边客户到`Nginx`是一个`TCP`连接。而右边`Nginx`到真实服务器是另外的一个`TCP`连接**。
 
 ​	![sgg-负载均衡集群原理03](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%8603.jpg?raw=true)
 
@@ -74,15 +74,15 @@
 
 是`LVS`就告诉`A`，三哥在三楼，所以`A`就要自己爬到三楼，然后挨个屋里面寻找三哥。而`Nginx`的原理就是，`Nginx`这个门卫大爷
 
-会自己上到三楼找到三哥，然后带下来给你。直接使用主机名称或者域名，那么使用`Nginx`。有的时候使用主机名或者域名效率
+会自己上到三楼找到三哥，然后带下来给你。**直接使用主机名称或者域名，那么使用`Nginx`。****有的时候使用主机名或者域名效率**
 
-会更高。所以`LVS`只能识别到`TCP`，但是`Nginx`能够识别到协议，主机名，端口和`IP`向下都能看的到。
+**会更高。所以`LVS`只能识别到`TCP`，但是`Nginx`能够识别到协议，主机名，端口和`IP`向下都能看的到**。
 
 ## 2.3、`LVS`工作模式
 
 ​	![sgg-LVS工作模式01](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F01.jpg?raw=true)
 
-&emsp;我们无法直接修改内核配置文件，所以需要一个命令行管理工具进行触发。这个工具就是`ipvsadm`。
+**&emsp;我们无法直接修改内核配置文件，所以需要一个命令行管理工具进行触发。这个工具就是`ipvsadm`。**
 
 ![sgg-LVS工作模式02](https://github.com/Christian-health/christian-health.github.io/blob/master/img/sgg-LVS%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F02.jpg?raw=true)
 
@@ -1002,6 +1002,8 @@ server {
 
 
 
+
+
 # 6、缓存和代理服务
 
 
@@ -1027,44 +1029,6 @@ server {
 
 
 # 8、监控集群
-
-最简单的监控工具就算是`Windows`的任务管理器。
-
-监控类型的工具都类似，我们学习一两个就行，其他的将来用到的时候再学习。
-
-## 8.1、监控`Cacti`
-
-#### 8.1.1、`Cacti`原理概述
-
-`RRDtool`  绘图软件
-
-`Snmp` 负责收集数据
-
-`Apache`  `web`服务器用来展示数据
-
-```
-yum -y install net-snmp net-snmp-utils
-service snmpd start
-
-SNMP常见版本
-	V1 简单 高效 不支持身份认证和加密
-	V2 身份认证
-	V3 加密
-```
-
-
-
-#### 8.1.2、`Cacti`监控构建
-
-####  8.1.3、`Cacti`插架添加
-
-
-
-## 8.2、监控`Nagios`
-
-
-
-### 8.3、监控`Zabbix`
 
 
 
@@ -1258,17 +1222,17 @@ raw ---->  mangle ----> nat ----> filter
 
 ![ssg-iptables-语法规则16](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9916.jpg?raw=true) 
 
-接下来要研究的是`DNAT `  和`SNAT`，关于`DNAT`和`SNAT`的实验需要自己做一次。不能光看别人做。
-![ssg-iptables-语法规则17](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9917.jpg?raw=true)  
-![ssg-iptables-语法规则18](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9918.jpg?raw=true) 
-![ssg-iptables-语法规则19](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9919.jpg?raw=true)
-![ssg-iptables-语法规则20](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9920.jpg?raw=true)
+接下来要研究的是`DNAT    `   和`SNAT`，关于`DNAT`和`SNAT`的实验需要自己做一次。不能光看别人做。
+![ssg-iptables-语法规则17](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9917.jpg?raw=true)    
+![ssg-iptables-语法规则18](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9918.jpg?raw=true)   
+![ssg-iptables-语法规则19](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9919.jpg?raw=true)   
+![ssg-iptables-语法规则20](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9920.jpg?raw=true)   
 ![ssg-iptables-语法规则21](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9921.jpg?raw=true)
 ![ssg-iptables-语法规则22](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9922.jpg?raw=true)
 ![ssg-iptables-语法规则23](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9923.jpg?raw=true)
 ![ssg-iptables-语法规则24](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9924.jpg?raw=true)
-![ssg-iptables-语法规则25](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9925.jpg?raw=true)
-![ssg-iptables-语法规则26](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9926.jpg?raw=true) 
+![ssg-iptables-语法规则25](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9925.jpg?raw=true)  
+![ssg-iptables-语法规则26](https://github.com/Christian-health/christian-health.github.io/blob/master/img/ssg-iptables-%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%9926.jpg?raw=true)   
 
 ## 9.4、`Selinux`
 ### 9.4.1 `Selinux`前世今生
@@ -1307,9 +1271,9 @@ raw ---->  mangle ----> nat ----> filter
 
 ### 9.4.2 安全上下文
 
-&emsp;古代将军出城，带着一块令牌，给守城官兵看，如果令牌正确让出城，否则不让。主体要访问客体，也需要拿出这样的令牌。`Selinux`也有这样的一个令牌，这个令牌在`Selinux`中叫做安全上下文。
+&emsp;古代将军出城，带着一块令牌，给守城官兵看，如果令牌正确让出城，否则不让。`Selinux`也有这样的一个令牌，这个令牌在
 
-
+`Selinux`中叫做安全上下文。
 
 **selinux第二讲停止没有看**
 
