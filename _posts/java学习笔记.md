@@ -22,3 +22,11 @@ https://blog.csdn.net/ly823260355/article/details/92577122
 
 
 
+## 2、java运行时候内存对象的显示
+
+```
+ watch "sudo -u provider /usr/local/zxjdk-8u212-linux-x64/bin/jmap -histo 28074 |more"
+可以查看到java.lang.StackTraceElement剧增
+原因是两个函数互相调用，不停的入栈
+```
+
