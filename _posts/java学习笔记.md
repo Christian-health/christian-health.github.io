@@ -30,3 +30,5 @@ https://blog.csdn.net/ly823260355/article/details/92577122
 原因是两个函数互相调用，不停的入栈
 ```
 
+## 3、理解 Java 中的Class.getClassLoader
+https://blog.csdn.net/nanhuaibeian/article/details/105773504
